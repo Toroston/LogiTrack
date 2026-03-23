@@ -3,10 +3,12 @@ import { tableStyleColumn, tableStyleHeader } from "../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import AltaEnvio from "./AltaEnvio/AltaEnvio";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const LogiTrack = () => {
-
     const [envios, setEnvios] = useState([]);
+    const navigate = useNavigate(); 
 
     const generarTrackingId = () => {
         return "TRK-" + Math.floor(Math.random() * 1000000);
@@ -26,7 +28,10 @@ const LogiTrack = () => {
             permisionaria: form.origen,
             estado: "Creado",
             fechaEstimadaEntrega: "-",
-            fechaEntrega: "-"
+            fechaEntrega: "-",
+            remitente: form.remitente,
+            destino: form.destino,
+            tipo: form.tipo
         };
 
         setEnvios(prev => [nuevoEnvio, ...prev]);
@@ -58,21 +63,40 @@ const LogiTrack = () => {
             ...columnStyle,
             ...headerStyle,
         },
+        {
+            id: 'acciones',
+            header: "Acciones",
+            ...columnStyle,
+            ...headerStyle,
+            Cell: ({ row }) => (
+                <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ backgroundColor: "#1976d2" }}
+                    onClick={() => {
+                        const datosParaDetalle = {
+                            trackingId: row.original.nSolicitud,
+                            remitente: row.original.remitente,
+                            destinatario: row.original.cliente,
+                            origen: row.original.permisionaria,
+                            destino: row.original.destino,
+                            tipo: row.original.tipo,
+                            estadoActual: row.original.estado,
+                            fechaCreacion: row.original.fechaAlta
+                        };
+                        navigate(`/detalle/${row.original.nSolicitud}`, { state: { envio: datosParaDetalle } });
+                    }}
+                >
+                    Ver Detalle
+                </Button>
+            ),
+        }
     ];
 
     return (
         <>
             <AltaEnvio onCrear={crearEnvio} />
-
             <MaterialReactTable
-                muiTableBodyProps={{
-                    sx: {
-                        fontFamily: 'sans-serif',
-                        fontWeight: 400,
-                        fontSize: '0.9rem',
-                        color: 'rgba(0, 0, 0, 0.7)',
-                    },
-                }}
                 columns={columns}
                 data={envios}
                 enableDensityToggle={false}
@@ -85,6 +109,14 @@ const LogiTrack = () => {
                 muiTableProps={{ sx: { border: '1px solid #ddd' } }}
                 muiTableHeadCellProps={{ sx: { border: '1px solid #ddd' } }}
                 muiTableBodyCellProps={{ sx: { border: '1px solid #ddd' } }}
+                muiTableBodyProps={{
+                    sx: {
+                        fontFamily: 'sans-serif',
+                        fontWeight: 400,
+                        fontSize: '0.9rem',
+                        color: 'rgba(0, 0, 0, 0.7)',
+                    },
+                }}
                 initialState={{
                     density: 'compact',
                     pagination: { pageIndex: 0, pageSize: 5 },
