@@ -8,6 +8,7 @@ import {
     Paper,
     Grid
 } from "@mui/material";
+import BackButton from '../BackButton/BackButton';
 
 const AltaEnvio = ({ onCrear }) => {
 
@@ -44,6 +45,11 @@ const AltaEnvio = ({ onCrear }) => {
 
     return (
         <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+
+            <Box sx={{ mb: 2 }}>
+                <BackButton />
+            </Box>
+
             <Typography variant="h5" mb={2}>
                 Alta de Envío
             </Typography>

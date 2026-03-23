@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Paper } from '@mui/material';
 import DetalleEnvio from '../DetalleEnvio/DetalleEnvio';
+import BackButton from '../BackButton/BackButton';
 
 const enviosMock = [
     {
@@ -50,6 +51,11 @@ const BusquedaEnvio = () => {
 
     return (
     <Box sx={{ maxWidth: 700, mx: 'auto', mt: 4, px: 2 }}>
+
+            <Box sx={{ mb: 2 }}>
+                <BackButton/>
+            </Box>
+
         <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
                 Rastrear Envío
