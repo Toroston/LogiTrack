@@ -2,21 +2,19 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Card, CardContent, Typography, Grid, Chip, Box, Divider } from '@mui/material';
 
-const DetalleEnvio = () => { 
-
-const location = useLocation();
-const envioDesdeTabla = location.state?.envio;
-
-const datosEnvio = envioDesdeTabla || {
-    trackingId: "TRK-841328",
-    remitente: "Juan Pérez",
-    origen: "Sucursal Centro, CABA",
-    tipo: "Express",
-    destinatario: "María Gómez",
-    destino: "Calle Falsa 123, Córdoba",
-    estadoActual: "En tránsito",
-    fechaCreacion: "2026-03-23T07:30:00Z"
-};
+const DetalleEnvio = ({ envio }) => { 
+    const location = useLocation();
+    const envioDesdeTabla = location.state?.envio;
+    const datosEnvio = envio || envioDesdeTabla || {
+        trackingId: "TRK-841328",
+        remitente: "Juan Pérez",
+        origen: "Sucursal Centro, CABA",
+        tipo: "Express",
+        destinatario: "María Gómez",
+        destino: "Calle Falsa 123, Córdoba",
+        estadoActual: "En tránsito",
+        fechaCreacion: "2026-03-23T07:30:00Z"
+    };
 
 const getEstadoColor = (estado) => {
     switch (estado) {
