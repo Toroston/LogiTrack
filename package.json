@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set VITE_BASE_URL=http://localhost:4500&& vite",
     "start": "set VITE_BASE_URL=http://localhost:4500&& vite",
-    "build": "node ./src/scripts/generate-build.js && vite build",
+    "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
