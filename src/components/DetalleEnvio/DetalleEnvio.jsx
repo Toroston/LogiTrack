@@ -1,19 +1,21 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { 
-    Card, 
-    CardContent, 
-    Typography, 
-    Grid, 
-    Chip, 
-    Box, 
-    Divider 
+import {
+    Card,
+    CardContent,
+    Typography,
+    Grid,
+    Chip,
+    Box,
+    Divider,
+    IconButton
 } from '@mui/material';
-import BackButton from '../BackButton/BackButton'; 
+import BackButton from '../BackButton/BackButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-const DetalleEnvio = ({ envio }) => { 
+const DetalleEnvio = ({ envio, onClose }) => {
+
     const location = useLocation();
-
     const envioDesdeTabla = location.state?.envio;
 
     const datosEnvio = envio || envioDesdeTabla || {
@@ -29,16 +31,11 @@ const DetalleEnvio = ({ envio }) => {
 
     const getEstadoColor = (estado) => {
         switch (estado) {
-            case 'Creado':
-                return 'default';
-            case 'En sucursal':
-                return 'warning';
-            case 'En tránsito':
-                return 'info';
-            case 'Entregado':
-                return 'success';
-            default:
-                return 'default';
+            case 'Creado': return 'default';
+            case 'En sucursal': return 'warning';
+            case 'En tránsito': return 'info';
+            case 'Entregado': return 'success';
+            default: return 'default';
         }
     };
 
@@ -53,112 +50,87 @@ const DetalleEnvio = ({ envio }) => {
     return (
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 6, mb: 4, px: 2 }}>
 
-            
             <Box sx={{ mb: 2 }}>
-                <BackButton />
+                {onClose ? (
+                    <IconButton
+                        onClick={onClose}
+                        sx={{
+                            backgroundColor: '#f44336',
+                            color: 'white',
+                            '&:hover': {
+                                backgroundColor: '#d32f2f'
+                            },
+                            width: 40,
+                            height: 40
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                ) : (
+                    <BackButton />
+                )}
             </Box>
 
-            {/* Título */}
-            <Typography 
-                variant="h4" 
-                component="h1" 
-                gutterBottom 
-                sx={{ fontWeight: 'bold', color: 'text.primary', mb: 3 }}
+            <Typography
+                variant="h4"
+                gutterBottom
+                sx={{ fontWeight: 'bold', mb: 3 }}
             >
                 Detalle de envío
             </Typography>
 
             <Card sx={{ boxShadow: 3 }}>
-                <Box sx={{ 
-                    p: 3, 
-                    bgcolor: 'grey.50', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center' 
+                <Box sx={{
+                    p: 3,
+                    bgcolor: 'grey.50',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}>
                     <Box>
-                        <Typography variant="overline" color="text.secondary" sx={{ fontWeight: 'bold' }}>
+                        <Typography variant="overline" sx={{ fontWeight: 'bold' }}>
                             Tracking ID
                         </Typography>
-                        <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+                        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
                             {datosEnvio.trackingId}
                         </Typography>
                     </Box>
-                    <Chip 
-                        label={datosEnvio.estadoActual} 
-                        color={getEstadoColor(datosEnvio.estadoActual)} 
-                        sx={{ fontWeight: 'bold' }}
+
+                    <Chip
+                        label={datosEnvio.estadoActual}
+                        color={getEstadoColor(datosEnvio.estadoActual)}
                     />
                 </Box>
 
                 <Divider />
 
-                <CardContent sx={{ p: 3 }}>
+                <CardContent>
                     <Grid container spacing={4}>
                         <Grid item xs={12} sm={6}>
-                            <Box sx={{ mb: 2 }}>
-                                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                    Remitente
-                                </Typography>
-                                <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
-                                    {datosEnvio.remitente}
-                                </Typography>
-                            </Box>
+                            <Typography variant="subtitle2">Remitente</Typography>
+                            <Typography>{datosEnvio.remitente}</Typography>
 
-                            <Box sx={{ mb: 2 }}> 
-                                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                    Origen
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    {datosEnvio.origen}
-                                </Typography>
-                            </Box>
+                            <Typography variant="subtitle2" mt={2}>Origen</Typography>
+                            <Typography>{datosEnvio.origen}</Typography>
 
-                            <Box>
-                                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                    Tipo
-                                </Typography>
-                                <Typography 
-                                    variant="body1" 
-                                    color={datosEnvio.tipo === 'Express' ? 'blue' : 'text.secondary'}
-                                >
-                                    {datosEnvio.tipo}
-                                </Typography>
-                            </Box>
+                            <Typography variant="subtitle2" mt={2}>Tipo</Typography>
+                            <Typography>{datosEnvio.tipo}</Typography>
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
-                            <Box sx={{ mb: 2 }}>
-                                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                    Destinatario
-                                </Typography>
-                                <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
-                                    {datosEnvio.destinatario}
-                                </Typography>
-                            </Box>
+                            <Typography variant="subtitle2">Destinatario</Typography>
+                            <Typography>{datosEnvio.destinatario}</Typography>
 
-                            <Box sx={{ mb: 2 }}> 
-                                <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
-                                    Destino
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    {datosEnvio.destino}
-                                </Typography>
-                            </Box>
+                            <Typography variant="subtitle2" mt={2}>Destino</Typography>
+                            <Typography>{datosEnvio.destino}</Typography>
                         </Grid>
                     </Grid>
                 </CardContent>
 
                 <Divider />
 
-                <Box sx={{ 
-                    p: 2, 
-                    bgcolor: 'grey.50', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center' 
-                }}>
-                    <Typography variant="body2" sx={{ fontWeight: 'medium', color: 'text.secondary' }}>
+                <Box sx={{ p: 2 }}>
+                    <Typography variant="body2">
                         Fecha de creación: {fechaFormateada}
                     </Typography>
                 </Box>
