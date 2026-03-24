@@ -34,70 +34,78 @@ const BusquedaEnvio = () => {
     const manejarBusqueda = () => {
         setError('');
         setEnvioEncontrado(null);
+
         if (!inputBusqueda.trim()) {
-        setError('Por favor, ingresá un Tracking ID.');
-        return;
+            setError('Por favor, ingresá un Tracking ID.');
+            return;
         }
+
         const resultado = enviosMock.find(
-            (envio) => envio.trackingId.toUpperCase() === inputBusqueda.trim().toUpperCase()
+            (envio) =>
+                envio.trackingId.toUpperCase() === inputBusqueda.trim().toUpperCase()
         );
 
         if (resultado) {
-        setEnvioEncontrado(resultado);
+            setEnvioEncontrado(resultado);
         } else {
             setError('No se encontró ningún envío con ese Tracking ID.');
         }
     };
 
     return (
-    <Box sx={{ maxWidth: 700, mx: 'auto', mt: 4, px: 2 }}>
+        <Box sx={{ maxWidth: 700, mx: 'auto', mt: 4, px: 2 }}>
 
             <Box sx={{ mb: 2 }}>
-                <BackButton/>
+                <BackButton />
             </Box>
 
-        <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
-                Rastrear Envío
-            </Typography>
-        
-            <Box sx={{ display: 'flex', gap: 2 }}>
-                <TextField
-                    fullWidth
-                    label="Ingresá el Tracking ID"
-                    variant="outlined"
-                    value={inputBusqueda}
-                    onChange={(e) => setInputBusqueda(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') manejarBusqueda();
-                    }}
-                />
-            <Button 
-                variant="contained" 
-                size="large"
-                onClick={manejarBusqueda}
-                sx={{ 
-                    backgroundColor: "rgb(4, 170, 109)", 
-                    "&:hover": { backgroundColor: "rgb(3, 140, 90)" },
-                    px: 4
-                }}
-            >
-                Buscar
-            </Button>
-            </Box>
-            {error && (
-                <Typography color="error" sx={{ mt: 2, fontWeight: 'medium' }}>
-                    {error}
+            <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+                    Rastrear Envío
                 </Typography>
-            )}
-        </Paper>
-        {envioEncontrado && (
-        <Box sx={{ mt: -4 }}>
-            <DetalleEnvio envio={envioEncontrado} />
-        </Box>
-        )}
 
-    </Box>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                    <TextField
+                        fullWidth
+                        label="Ingresá el Tracking ID"
+                        variant="outlined"
+                        value={inputBusqueda}
+                        onChange={(e) => setInputBusqueda(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') manejarBusqueda();
+                        }}
+                    />
+                    <Button
+                        variant="contained"
+                        size="large"
+                        onClick={manejarBusqueda}
+                        sx={{
+                            backgroundColor: "rgb(4, 170, 109)",
+                            "&:hover": { backgroundColor: "rgb(3, 140, 90)" },
+                            px: 4
+                        }}
+                    >
+                        Buscar
+                    </Button>
+                </Box>
+
+                {error && (
+                    <Typography color="error" sx={{ mt: 2, fontWeight: 'medium' }}>
+                        {error}
+                    </Typography>
+                )}
+            </Paper>
+
+            {envioEncontrado && (
+                <Box sx={{ mt: -4 }}>
+                    <DetalleEnvio 
+                        envio={envioEncontrado} 
+                        onClose={() => setEnvioEncontrado(null)} 
+                    />
+                </Box>
+            )}
+
+        </Box>
     );
 };
 
