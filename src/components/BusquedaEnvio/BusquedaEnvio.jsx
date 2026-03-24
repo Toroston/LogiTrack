@@ -26,7 +26,8 @@ const enviosMock = [
     }
 ];
 
-const BusquedaEnvio = () => {
+const BusquedaEnvio = ({ user }) => {
+
     const [inputBusqueda, setInputBusqueda] = useState('');
     const [envioEncontrado, setEnvioEncontrado] = useState(null);
     const [error, setError] = useState('');
@@ -68,13 +69,13 @@ const BusquedaEnvio = () => {
                     <TextField
                         fullWidth
                         label="Ingresá el Tracking ID"
-                        variant="outlined"
                         value={inputBusqueda}
                         onChange={(e) => setInputBusqueda(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') manejarBusqueda();
                         }}
                     />
+
                     <Button
                         variant="contained"
                         size="large"
@@ -90,7 +91,7 @@ const BusquedaEnvio = () => {
                 </Box>
 
                 {error && (
-                    <Typography color="error" sx={{ mt: 2, fontWeight: 'medium' }}>
+                    <Typography color="error" sx={{ mt: 2 }}>
                         {error}
                     </Typography>
                 )}
@@ -98,9 +99,10 @@ const BusquedaEnvio = () => {
 
             {envioEncontrado && (
                 <Box sx={{ mt: -4 }}>
-                    <DetalleEnvio 
-                        envio={envioEncontrado} 
-                        onClose={() => setEnvioEncontrado(null)} 
+                    <DetalleEnvio
+                        envio={envioEncontrado}
+                        onClose={() => setEnvioEncontrado(null)}
+                        user={user}
                     />
                 </Box>
             )}
