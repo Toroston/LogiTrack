@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
     Card,
@@ -8,12 +8,17 @@ import {
     Chip,
     Box,
     Divider,
-    IconButton
+    IconButton,
+    Button,
+    MenuItem,
+    Select
 } from '@mui/material';
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-const DetalleEnvio = ({ envio, onClose }) => {
+const estados = ['Creado', 'En sucursal', 'En tránsito', 'Entregado'];
+
+const DetalleEnvio = ({ envio, onClose, user }) => {
 
     const location = useLocation();
     const envioDesdeTabla = location.state?.envio;
@@ -28,6 +33,11 @@ const DetalleEnvio = ({ envio, onClose }) => {
         estadoActual: "En tránsito",
         fechaCreacion: "2026-03-23T07:30:00Z"
     };
+
+    const [estadoActual, setEstadoActual] = useState(datosEnvio.estadoActual);
+    const [editando, setEditando] = useState(false);
+
+    const esSupervisor = user?.rol === "Supervisor";
 
     const getEstadoColor = (estado) => {
         switch (estado) {
@@ -47,6 +57,10 @@ const DetalleEnvio = ({ envio, onClose }) => {
         minute: '2-digit'
     });
 
+    const handleGuardar = () => {
+        setEditando(false);
+    };
+
     return (
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 6, mb: 4, px: 2 }}>
 
@@ -57,9 +71,7 @@ const DetalleEnvio = ({ envio, onClose }) => {
                         sx={{
                             backgroundColor: '#f44336',
                             color: 'white',
-                            '&:hover': {
-                                backgroundColor: '#d32f2f'
-                            },
+                            '&:hover': { backgroundColor: '#d32f2f' },
                             width: 40,
                             height: 40
                         }}
@@ -71,11 +83,7 @@ const DetalleEnvio = ({ envio, onClose }) => {
                 )}
             </Box>
 
-            <Typography
-                variant="h4"
-                gutterBottom
-                sx={{ fontWeight: 'bold', mb: 3 }}
-            >
+            <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3 }}>
                 Detalle de envío
             </Typography>
 
@@ -96,10 +104,43 @@ const DetalleEnvio = ({ envio, onClose }) => {
                         </Typography>
                     </Box>
 
-                    <Chip
-                        label={datosEnvio.estadoActual}
-                        color={getEstadoColor(datosEnvio.estadoActual)}
-                    />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        {!editando ? (
+                            <Chip label={estadoActual} color={getEstadoColor(estadoActual)} />
+                        ) : (
+                            <Select
+                                value={estadoActual}
+                                onChange={(e) => setEstadoActual(e.target.value)}
+                                size="small"
+                            >
+                                {estados.map((estado) => (
+                                    <MenuItem key={estado} value={estado}>
+                                        {estado}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        )}
+
+                        {esSupervisor && (
+                            !editando ? (
+                                <Button
+                                    variant="outlined"
+                                    size="small"
+                                    onClick={() => setEditando(true)}
+                                >
+                                    Editar
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    onClick={handleGuardar}
+                                >
+                                    Guardar
+                                </Button>
+                            )
+                        )}
+                    </Box>
                 </Box>
 
                 <Divider />
