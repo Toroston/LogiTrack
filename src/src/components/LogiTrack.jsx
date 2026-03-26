@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
@@ -8,33 +8,43 @@ import { Button } from "@mui/material";
 
 const LogiTrack = () => {
     const [envios, setEnvios] = useState([]);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const generarTrackingId = () => {
         return "TRK-" + Math.floor(Math.random() * 1000000);
     };
 
-    const crearEnvio = (form) => {
+    const cargarEnvios = async () => {
+        const res = await fetch("http://localhost:3001/envios");
+        const data = await res.json();
+        setEnvios(data);
+    };
+
+    useEffect(() => {
+        cargarEnvios();
+    }, []);
+
+    const crearEnvio = async (form) => {
         const nuevoEnvio = {
-            nSolicitud: generarTrackingId(),
-            producto: form.tipo,
-            motivo: "-",
-            fechaAlta: new Date().toISOString(),
-            fechaAltaFormateada: new Date().toLocaleString(),
-            diasFecha: 0,
-            cliente: form.destinatario,
-            rol: "Operador",
-            nProducto: "-",
-            permisionaria: form.origen,
-            estado: "Creado",
-            fechaEstimadaEntrega: "-",
-            fechaEntrega: "-",
+            trackingId: generarTrackingId(),
             remitente: form.remitente,
+            destinatario: form.destinatario,
+            origen: form.origen,
             destino: form.destino,
-            tipo: form.tipo
+            tipo: form.tipo,
+            estado: "Creado",
+            fechaCreacion: new Date().toISOString()
         };
 
-        setEnvios(prev => [nuevoEnvio, ...prev]);
+        await fetch("http://localhost:3001/envios", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nuevoEnvio)
+        });
+
+        await cargarEnvios();
     };
 
     const columnStyle = tableStyleColumn(
@@ -53,12 +63,12 @@ const LogiTrack = () => {
     );
 
     const columns = [
-        { accessorKey: "nSolicitud", header: "Tracking ID", ...columnStyle, ...headerStyle, size: 120 },
-        { accessorKey: "cliente", header: "Destinatario", ...columnStyle, ...headerStyle },
-        { accessorKey: "permisionaria", header: "Origen", ...columnStyle, ...headerStyle },
+        { accessorKey: "trackingId", header: "Tracking ID", ...columnStyle, ...headerStyle },
+        { accessorKey: "destinatario", header: "Destinatario", ...columnStyle, ...headerStyle },
+        { accessorKey: "origen", header: "Origen", ...columnStyle, ...headerStyle },
         { accessorKey: "estado", header: "Estado", ...columnStyle, ...headerStyle },
         {
-            accessorKey: "fechaAltaFormateada",
+            accessorKey: "fechaCreacion",
             header: "Fecha Alta",
             ...columnStyle,
             ...headerStyle,
@@ -74,17 +84,9 @@ const LogiTrack = () => {
                     size="small"
                     sx={{ backgroundColor: "#1976d2" }}
                     onClick={() => {
-                        const datosParaDetalle = {
-                            trackingId: row.original.nSolicitud,
-                            remitente: row.original.remitente,
-                            destinatario: row.original.cliente,
-                            origen: row.original.permisionaria,
-                            destino: row.original.destino,
-                            tipo: row.original.tipo,
-                            estadoActual: row.original.estado,
-                            fechaCreacion: row.original.fechaAlta
-                        };
-                        navigate(`/detalle/${row.original.nSolicitud}`, { state: { envio: datosParaDetalle } });
+                        navigate(`/detalle/${row.original.trackingId}`, {
+                            state: { envio: row.original }
+                        });
                     }}
                 >
                     Ver Detalle

@@ -1,0 +1,16 @@
+{
+  "envios": [
+    {
+      "trackingId": "TRK-983223",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Express",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-26T01:55:13.395Z",
+      "id": "nMhLuCQAXas"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
