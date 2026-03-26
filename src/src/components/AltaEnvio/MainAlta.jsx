@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
-import { tableStyleColumn, tableStyleHeader } from "../Helpers/formatHelpers";
+import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import AltaEnvio from "./AltaEnvio/AltaEnvio";
+import AltaEnvio from "./AltaEnvio";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const LogiTrack = () => {
+const MainAlta = () => {
     const [envios, setEnvios] = useState([]);
     const navigate = useNavigate();
-
-    const generarTrackingId = () => {
-        return "TRK-" + Math.floor(Math.random() * 1000000);
-    };
 
     const cargarEnvios = async () => {
         const res = await fetch("http://localhost:3001/envios");
@@ -25,15 +21,25 @@ const LogiTrack = () => {
     }, []);
 
     const crearEnvio = async (form) => {
+        const trackingId = "TRK-" + Math.floor(Math.random() * 1000000);
+
         const nuevoEnvio = {
-            trackingId: generarTrackingId(),
+            id: trackingId,
+            trackingId: trackingId,
             remitente: form.remitente,
             destinatario: form.destinatario,
             origen: form.origen,
             destino: form.destino,
             tipo: form.tipo,
             estado: "Creado",
-            fechaCreacion: new Date().toISOString()
+            fechaCreacion: new Date().toISOString(),
+            historial: [
+            { 
+                estado: "Creado", 
+                timestamp: new Date().toISOString(), 
+                usuario: "Sistema" 
+            }
+        ]
         };
 
         await fetch("http://localhost:3001/envios", {
@@ -134,4 +140,4 @@ const LogiTrack = () => {
     );
 };
 
-export default LogiTrack;
+export default MainAlta;
