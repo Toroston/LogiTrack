@@ -1,7 +1,7 @@
 import { useRoutes, Navigate } from "react-router-dom";
 import AltaEnvio from "../components/AltaEnvio/AltaEnvio";
 import DetalleEnvio from "../components/DetalleEnvio/DetalleEnvio";
-import LogiTrack from "../components/LogiTrack";
+import MainAlta from "../components/AltaEnvio/MainAlta";
 import BusquedaEnvio from "../components/BusquedaEnvio/BusquedaEnvio";
 import Menu from "../components/Menu/Menu";
 
@@ -16,7 +16,7 @@ export const Routes = ({ user, setUser }) => {
                 },
                 {
                     path: '/envios',
-                    element: <LogiTrack/>
+                    element: <MainAlta/>
                 },
                 {
                     path: '/detalle',

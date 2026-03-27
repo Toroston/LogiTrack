@@ -1,0 +1,81 @@
+{
+  "envios": [
+    {
+      "id": "i-A8PW8mQrA",
+      "trackingId": "TRK-706255",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Normal",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-03-26T06:07:34.468Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-26T06:07:34.468Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-26T06:07:42.182Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-26T06:09:17.143Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-27T05:16:17.994Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-27T05:34:58.314Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-27T05:35:01.902Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-03-27T05:35:04.854Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-27T05:42:54.819Z",
+          "usuario": "Supervisor_01"
+        }
+      ]
+    },
+    {
+      "id": "swc16l9ESVw",
+      "trackingId": "TRK-631258",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Normal",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-03-27T04:43:56.364Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-27T04:43:56.365Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-27T04:44:21.565Z",
+          "usuario": "Supervisor_01"
+        }
+      ]
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
