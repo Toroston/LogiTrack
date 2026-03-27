@@ -54,8 +54,8 @@ const BusquedaEnvio = () => {
                 <Box sx={{ display: 'flex', gap: 2 }}>
                     <TextField
                         fullWidth
-                        label="Ingresá el Tracking ID (Ej: TRK-123456)"
                         variant="outlined"
+                        label="Ingresá el Tracking ID"
                         value={inputBusqueda}
                         disabled={loading}
                         onChange={(e) => setInputBusqueda(e.target.value)}
@@ -63,6 +63,7 @@ const BusquedaEnvio = () => {
                             if (e.key === 'Enter') manejarBusqueda();
                         }}
                     />
+
                     <Button
                         variant="contained"
                         size="large"
@@ -80,7 +81,7 @@ const BusquedaEnvio = () => {
                 </Box>
 
                 {error && (
-                    <Typography color="error" sx={{ mt: 2, fontWeight: 'medium' }}>
+                    <Typography color="error" sx={{ mt: 2 }}>
                         {error}
                     </Typography>
                 )}
@@ -88,9 +89,10 @@ const BusquedaEnvio = () => {
 
             {envioEncontrado && (
                 <Box sx={{ mt: -4 }}>
-                    <DetalleEnvio 
-                        envio={envioEncontrado} 
-                        onClose={() => setEnvioEncontrado(null)} 
+                    <DetalleEnvio
+                        envio={envioEncontrado}
+                        onClose={() => setEnvioEncontrado(null)}
+                        user={user}
                     />
                 </Box>
             )}
