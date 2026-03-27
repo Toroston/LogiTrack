@@ -9,7 +9,7 @@ import {
     Box,
     Divider,
     IconButton,
-    Button,     
+    Button,
     Select,
     MenuItem,
     FormControl,
@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
-import {updateEstadoEnvio} from "..//../services/UpdateEstadoEnvio"
+import { updateEstadoEnvio } from "..//../services/UpdateEstadoEnvio"
 
 const estados = ['Creado', 'En sucursal', 'En tránsito', 'Entregado'];
 
@@ -35,19 +35,19 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
         destino: "Calle Falsa 123, Córdoba",
         estado: "En tránsito",
         fechaCreacion: "2026-03-23T07:30:00Z",
-        historial: [] 
+        historial: []
     });
 
     const [nuevoEstado, setNuevoEstado] = useState('');
 
     const handleActualizarEstado = async () => {
         if (!nuevoEstado) return;
-        
+
         try {
             //Falta parte de roles y usuarios
             const res = await updateEstadoEnvio(datosEnvio.id, nuevoEstado, "Supervisor_01");
             const dataActualizada = await res.json();
-            
+
             setDatosEnvio(dataActualizada);
             setNuevoEstado('');
         } catch (error) {
@@ -107,6 +107,7 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                 Detalle de envío
             </Typography>
 
+
             <Card sx={{ boxShadow: 3 }}>
                 <Box sx={{ p: 3, bgcolor: 'grey.50', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Box>
@@ -114,44 +115,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{datosEnvio.trackingId}</Typography>
                     </Box>
                     <Chip label={datosEnvio.estado} color={getEstadoColor(datosEnvio.estado)} />
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        {!editando ? (
-                            <Chip label={estadoActual} color={getEstadoColor(estadoActual)} />
-                        ) : (
-                            <Select
-                                value={estadoActual}
-                                onChange={(e) => setEstadoActual(e.target.value)}
-                                size="small"
-                            >
-                                {estados.map((estado) => (
-                                    <MenuItem key={estado} value={estado}>
-                                        {estado}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        )}
-
-                        {esSupervisor && (
-                            !editando ? (
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    onClick={() => setEditando(true)}
-                                >
-                                    Editar
-                                </Button>
-                            ) : (
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    onClick={handleGuardar}
-                                >
-                                    Guardar
-                                </Button>
-                            )
-                        )}
-                    </Box>
                 </Box>
 
                 <Divider />
@@ -173,37 +136,40 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     </Grid>
 
                     {/* --- SECCIÓN NUEVA: ACCIONES DEL SUPERVISOR --- */}
-                    <Box sx={{ mt: 4, p: 2, border: '1px dashed #ccc', borderRadius: 2 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'bold' }}>
-                            Panel de Control (Supervisor)
-                        </Typography>
-                        <Grid container spacing={2} alignItems="center">
-                            <Grid item xs={8}>
-                                <FormControl fullWidth size="small">
-                                    <InputLabel>Cambiar Estado</InputLabel>
-                                    <Select
-                                        value={nuevoEstado}
-                                        label="Cambiar Estado"
-                                        onChange={(e) => setNuevoEstado(e.target.value)}
+                    {esSupervisor && (
+                        <Box sx={{ mt: 4, p: 2, border: '1px dashed #ccc', borderRadius: 2 }}>
+                            <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'bold' }}>
+                                Panel de Control (Supervisor)
+                            </Typography>
+                            <Grid container spacing={2} alignItems="center">
+                                <Grid item xs={8}>
+                                    <FormControl fullWidth size="small">
+                                        <InputLabel>Cambiar Estado</InputLabel>
+                                        <Select
+                                            value={nuevoEstado}
+                                            label="Cambiar Estado"
+                                            onChange={(e) => setNuevoEstado(e.target.value)}
+                                        >
+                                            <MenuItem value="En sucursal">En sucursal</MenuItem>
+                                            <MenuItem value="En tránsito">En tránsito</MenuItem>
+                                            <MenuItem value="Entregado">Entregado</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Button
+                                        fullWidth
+                                        variant="contained"
+                                        onClick={handleActualizarEstado}
+                                        disabled={!nuevoEstado}
                                     >
-                                        <MenuItem value="En sucursal">En sucursal</MenuItem>
-                                        <MenuItem value="En tránsito">En tránsito</MenuItem>
-                                        <MenuItem value="Entregado">Entregado</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                        Actualizar
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={4}>
-                                <Button 
-                                    fullWidth 
-                                    variant="contained" 
-                                    onClick={handleActualizarEstado}
-                                    disabled={!nuevoEstado}
-                                >
-                                    Actualizar
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
+                        </Box>
+                    )}
+
                 </CardContent>
 
                 <Divider />

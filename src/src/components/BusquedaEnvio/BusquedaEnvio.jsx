@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography, Paper } from '@mui/material';
 import DetalleEnvio from '../DetalleEnvio/DetalleEnvio';
 import BackButton from '../BackButton/BackButton';
 
-const BusquedaEnvio = () => {
+const BusquedaEnvio = ({user}) => {
     const [inputBusqueda, setInputBusqueda] = useState('');
     const [envioEncontrado, setEnvioEncontrado] = useState(null);
     const [error, setError] = useState('');
