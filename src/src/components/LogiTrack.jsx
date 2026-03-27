@@ -31,7 +31,11 @@ const LogiTrack = () => {
             fechaEntrega: "-",
             remitente: form.remitente,
             destino: form.destino,
-            tipo: form.tipo
+            tipo: form.tipo,
+            distancia: form.distancia,
+            volumen: form.volumen,
+            ventanaHoraria: form.ventanaHoraria,
+            restricciones: form.restricciones
         };
 
         setEnvios(prev => [nuevoEnvio, ...prev]);
@@ -82,7 +86,11 @@ const LogiTrack = () => {
                             destino: row.original.destino,
                             tipo: row.original.tipo,
                             estadoActual: row.original.estado,
-                            fechaCreacion: row.original.fechaAlta
+                            fechaCreacion: row.original.fechaAlta,
+                            distancia: row.original.distancia,
+                            volumen: row.original.volumen,
+                            ventanaHoraria: row.original.ventanaHoraria,
+                            restricciones: row.original.restricciones
                         };
                         navigate(`/detalle/${row.original.nSolicitud}`, { state: { envio: datosParaDetalle } });
                     }}
