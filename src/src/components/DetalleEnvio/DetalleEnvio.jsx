@@ -22,8 +22,6 @@ import {updateEstadoEnvio} from "..//../services/UpdateEstadoEnvio"
 const estados = ['Creado', 'En sucursal', 'En tránsito', 'Entregado'];
 
 const DetalleEnvio = ({ envio, onClose, user }) => {
-
-const DetalleEnvio = ({ envio, onClose }) => {
     const location = useLocation();
     const envioDesdeTabla = location.state?.envio;
 

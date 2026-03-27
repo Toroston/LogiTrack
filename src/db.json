@@ -8,7 +8,7 @@
       "origen": "asd",
       "destino": "asd",
       "tipo": "Normal",
-      "estado": "En tránsito",
+      "estado": "En sucursal",
       "fechaCreacion": "2026-03-26T06:07:34.468Z",
       "historial": [
         {
@@ -24,6 +24,34 @@
         {
           "estado": "En tránsito",
           "timestamp": "2026-03-26T06:09:17.143Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-27T05:16:17.994Z",
+          "usuario": "Supervisor_01"
+        }
+      ]
+    },
+    {
+      "id": "swc16l9ESVw",
+      "trackingId": "TRK-631258",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Normal",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-03-27T04:43:56.364Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-27T04:43:56.365Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-27T04:44:21.565Z",
           "usuario": "Supervisor_01"
         }
       ]
