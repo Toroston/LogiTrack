@@ -8,7 +8,7 @@
       "origen": "asd",
       "destino": "asd",
       "tipo": "Normal",
-      "estado": "En tránsito",
+      "estado": "Entregado",
       "fechaCreacion": "2026-03-26T06:07:34.468Z",
       "historial": [
         {
@@ -50,6 +50,11 @@
           "estado": "En tránsito",
           "timestamp": "2026-03-27T05:42:54.819Z",
           "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-03-27T18:38:09.819Z",
+          "usuario": "Supervisor_01"
         }
       ]
     },
@@ -61,7 +66,7 @@
       "origen": "asd",
       "destino": "asd",
       "tipo": "Normal",
-      "estado": "En tránsito",
+      "estado": "Entregado",
       "fechaCreacion": "2026-03-27T04:43:56.364Z",
       "historial": [
         {
@@ -72,6 +77,16 @@
         {
           "estado": "En tránsito",
           "timestamp": "2026-03-27T04:44:21.565Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-27T18:38:45.595Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-03-27T18:38:48.333Z",
           "usuario": "Supervisor_01"
         }
       ]
