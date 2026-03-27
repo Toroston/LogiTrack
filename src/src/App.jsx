@@ -1,6 +1,6 @@
+import { BrowserRouter } from 'react-router-dom'
+import { Routes } from './routes/Routes'
 import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Routes } from './routes/Routes';
 import Login from './components/Login/Login';
 
 export const App = () => {
