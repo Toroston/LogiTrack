@@ -1,0 +1,33 @@
+{
+  "envios": [
+    {
+      "id": "i-A8PW8mQrA",
+      "trackingId": "TRK-706255",
+      "remitente": "asd",
+      "destinatario": "asd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Normal",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-03-26T06:07:34.468Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-26T06:07:34.468Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-26T06:07:42.182Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-03-26T06:09:17.143Z",
+          "usuario": "Supervisor_01"
+        }
+      ]
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
