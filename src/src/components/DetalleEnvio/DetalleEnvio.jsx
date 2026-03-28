@@ -25,16 +25,21 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
     const location = useLocation();
     const envioDesdeTabla = location.state?.envio;
 
+    // --- MOCK ACTUALIZADO CON DATOS LOGÍSTICOS ---
     const [datosEnvio, setDatosEnvio] = useState(envio || envioDesdeTabla || {
-        id: 1, // Importante: json-server usa el id para el PUT
+        id: 1, 
         trackingId: "TRK-841328",
         remitente: "Juan Pérez",
         origen: "Sucursal Centro, CABA",
         tipo: "Express",
         destinatario: "María Gómez",
         destino: "Calle Falsa 123, Córdoba",
+        distancia: 750,
+        volumen: 2.5,
+        ventanaHoraria: "09:00 - 18:00",
+        restricciones: "Frágil - Mantener vertical",
         estado: "En tránsito",
-        fechaCreacion: "2026-03-23T07:30:00Z",
+        fechaCreacion: new Date().toISOString(),
         historial: []
     });
 
@@ -42,21 +47,15 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
 
     const handleActualizarEstado = async () => {
         if (!nuevoEstado) return;
-
         try {
-            //Falta parte de roles y usuarios
             const res = await updateEstadoEnvio(datosEnvio.id, nuevoEstado, "Supervisor_01");
             const dataActualizada = await res.json();
-
             setDatosEnvio(dataActualizada);
             setNuevoEstado('');
         } catch (error) {
             console.error("Error al actualizar:", error);
         }
     };
-
-    const [estadoActual, setEstadoActual] = useState(datosEnvio.estadoActual);
-    const [editando, setEditando] = useState(false);
 
     const esSupervisor = user?.rol === "Supervisor";
 
@@ -68,18 +67,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             case 'Entregado': return 'success';
             default: return 'default';
         }
-    };
-
-    const fechaFormateada = new Date(datosEnvio.fechaCreacion).toLocaleDateString('es-AR', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-
-    const handleGuardar = () => {
-        setEditando(false);
     };
 
     return (
@@ -106,7 +93,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3 }}>
                 Detalle de envío
             </Typography>
-
 
             <Card sx={{ boxShadow: 3 }}>
                 <Box sx={{ p: 3, bgcolor: 'grey.50', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -135,7 +121,30 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                         </Grid>
                     </Grid>
 
-                    {/* --- SECCIÓN NUEVA: ACCIONES DEL SUPERVISOR --- */}
+                    <Divider sx={{ my: 3 }} />
+
+                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 2 }}>
+                        Información de Carga
+                    </Typography>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle2" color="textSecondary">Distancia</Typography>
+                            <Typography>{datosEnvio.distancia ? `${datosEnvio.distancia} km` : 'No especificada'}</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle2" color="textSecondary">Volumen</Typography>
+                            <Typography>{datosEnvio.volumen ? `${datosEnvio.volumen} m³` : 'No especificado'}</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle2" color="textSecondary">Ventana Horaria</Typography>
+                            <Typography>{datosEnvio.ventanaHoraria || 'Sin asignar'}</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle2" color="textSecondary">Restricciones</Typography>
+                            <Typography>{datosEnvio.restricciones || 'Ninguna'}</Typography>
+                        </Grid>
+                    </Grid>
+
                     {esSupervisor && (
                         <Box sx={{ mt: 4, p: 2, border: '1px dashed #ccc', borderRadius: 2 }}>
                             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'bold' }}>
@@ -169,7 +178,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                             </Grid>
                         </Box>
                     )}
-
                 </CardContent>
 
                 <Divider />
@@ -177,7 +185,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     <Typography variant="caption" color="textSecondary">
                         Creado el: {new Date(datosEnvio.fechaCreacion).toLocaleDateString()}
                     </Typography>
-                    {/* Muestra cuántos movimientos tiene el historial para verificar la auditoría */}
                     <Typography variant="caption" color="primary">
                         Eventos en historial: {datosEnvio.historial?.length || 0}
                     </Typography>
