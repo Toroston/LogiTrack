@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, TextField, Button, Typography, Paper } from '@mui/material';
 import DetalleEnvio from '../DetalleEnvio/DetalleEnvio';
 import BackButton from '../BackButton/BackButton';
+import PropTypes from "prop-types";
 
 const BusquedaEnvio = ({user}) => {
     const [inputBusqueda, setInputBusqueda] = useState('');
@@ -98,6 +99,10 @@ const BusquedaEnvio = ({user}) => {
             )}
         </Box>
     );
+};
+
+BusquedaEnvio.propTypes = {
+    user: PropTypes.object.isRequired
 };
 
 export default BusquedaEnvio;

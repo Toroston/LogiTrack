@@ -40,10 +40,10 @@ const MainAlta = () => {
             estado: "Creado",
             fechaCreacion: new Date().toISOString(),
             historial: [
-                { 
-                    estado: "Creado", 
-                    timestamp: new Date().toISOString(), 
-                    usuario: "Sistema" 
+                {
+                    estado: "Creado",
+                    timestamp: new Date().toISOString(),
+                    usuario: "Sistema"
                 }
             ]
         };
@@ -91,20 +91,24 @@ const MainAlta = () => {
             header: "Acciones",
             ...columnStyle,
             ...headerStyle,
-            Cell: ({ row }) => (
-                <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ backgroundColor: "#1976d2" }}
-                    onClick={() => {
-                        navigate(`/detalle/${row.original.trackingId}`, {
-                            state: { envio: row.original }
-                        });
-                    }}
-                >
-                    Ver Detalle
-                </Button>
-            ),
+            Cell: (props) => {
+                /* eslint-disable react/prop-types */
+                const { row } = props;
+                return (
+                    <Button
+                        variant="contained"
+                        size="small"
+                        sx={{ backgroundColor: "#1976d2" }}
+                        onClick={() => {
+                            navigate(`/detalle/${row.original.trackingId}`, {
+                                state: { envio: row.original }
+                            });
+                        }}
+                    >
+                        Ver Detalle
+                    </Button>
+                );
+            }
         }
     ];
 

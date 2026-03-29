@@ -66,7 +66,7 @@
       "origen": "asd",
       "destino": "asd",
       "tipo": "Normal",
-      "estado": "Entregado",
+      "estado": "En sucursal",
       "fechaCreacion": "2026-03-27T04:43:56.364Z",
       "historial": [
         {
@@ -87,6 +87,11 @@
         {
           "estado": "Entregado",
           "timestamp": "2026-03-27T18:38:48.333Z",
+          "usuario": "Supervisor_01"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-03-29T18:35:49.221Z",
           "usuario": "Supervisor_01"
         }
       ]
