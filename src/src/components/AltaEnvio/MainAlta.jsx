@@ -31,15 +31,21 @@ const MainAlta = () => {
             origen: form.origen,
             destino: form.destino,
             tipo: form.tipo,
+            // --- CORRECCIÓN: AGREGADOS PARA QUE SE GUARDEN ---
+            distancia: form.distancia,
+            volumen: form.volumen,
+            ventanaHoraria: form.ventanaHoraria,
+            restricciones: form.restricciones,
+            // ------------------------------------------------
             estado: "Creado",
             fechaCreacion: new Date().toISOString(),
             historial: [
-            { 
-                estado: "Creado", 
-                timestamp: new Date().toISOString(), 
-                usuario: "Sistema" 
-            }
-        ]
+                { 
+                    estado: "Creado", 
+                    timestamp: new Date().toISOString(), 
+                    usuario: "Sistema" 
+                }
+            ]
         };
 
         await fetch("http://localhost:3001/envios", {
@@ -78,6 +84,7 @@ const MainAlta = () => {
             header: "Fecha Alta",
             ...columnStyle,
             ...headerStyle,
+            Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString('es-AR')
         },
         {
             id: 'acciones',
@@ -128,12 +135,7 @@ const MainAlta = () => {
                 initialState={{
                     density: 'compact',
                     pagination: { pageIndex: 0, pageSize: 5 },
-                    sorting: [
-                        {
-                            id: 'fechaAltaFormateada',
-                            desc: true,
-                        }
-                    ]
+                    sorting: [{ id: 'fechaCreacion', desc: true }]
                 }}
             />
         </>
