@@ -1,10 +1,10 @@
-import React from 'react';
 import { Box, Typography, Paper, Grid, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SearchIcon from '@mui/icons-material/Search';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Logo from '../../assets/logo.png';
+import PropTypes from "prop-types";
 
 const MenuPrincipal = ({ user, setUser }) => {
 
@@ -128,5 +128,11 @@ const MenuPrincipal = ({ user, setUser }) => {
         </Box>
     );
 };
+
+MenuPrincipal.propTypes = {
+    user: PropTypes.object.isRequired,
+    setUser: PropTypes.func.isRequired,
+};
+
 
 export default MenuPrincipal;
