@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
     Card,
@@ -19,8 +19,7 @@ import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { updateEstadoEnvio } from "..//../services/UpdateEstadoEnvio"
 import { useNavigate } from 'react-router-dom';
-
-const estados = ['Creado', 'En sucursal', 'En tránsito', 'Entregado'];
+import PropTypes from "prop-types";
 
 const DetalleEnvio = ({ envio, onClose, user }) => {
     const navigate = useNavigate();
@@ -200,6 +199,12 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             </Card>
         </Box>
     );
+};
+
+DetalleEnvio.propTypes = {
+    envio: PropTypes.object,
+    onClose: PropTypes.func,
+    user: PropTypes.object.isRequired,
 };
 
 export default DetalleEnvio;

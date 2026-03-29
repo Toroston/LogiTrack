@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import {
     Box,
@@ -24,15 +23,6 @@ const getEstadoIcon = (estado) => {
             return <CheckCircleIcon color="success" />;
         default:
             return <FiberManualRecordIcon color="disabled" />;
-    }
-};
-
-const getEstadoColor = (estado) => {
-    switch (estado) {
-        case 'En sucursal': return 'warning';
-        case 'En tránsito': return 'info';
-        case 'Entregado': return 'success';
-        default: return 'default';
     }
 };
 

@@ -7,6 +7,7 @@ import {
     Paper
 } from "@mui/material";
 import logo from "../../assets/logo.png"; 
+import PropTypes from "prop-types";
 
 const usuariosMock = [
     { usuario: "admin", password: "1234", rol: "Supervisor" },
@@ -126,6 +127,10 @@ const Login = ({ onLogin }) => {
             </Paper>
         </Box>
     );
+};
+
+Login.propTypes = {
+    onLogin: PropTypes.func.isRequired,
 };
 
 export default Login;

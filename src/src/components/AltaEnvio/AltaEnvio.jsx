@@ -9,6 +9,7 @@ import {
     Grid
 } from "@mui/material";
 import BackButton from '../BackButton/BackButton';
+import PropTypes from "prop-types";
 
 const AltaEnvio = ({ onCrear }) => {
 
@@ -122,6 +123,10 @@ const AltaEnvio = ({ onCrear }) => {
             </Grid>
         </Paper>
     );
+};
+
+AltaEnvio.propTypes = {
+    onCrear: PropTypes.func.isRequired
 };
 
 export default AltaEnvio;
