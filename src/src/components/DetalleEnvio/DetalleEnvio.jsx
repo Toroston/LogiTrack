@@ -18,10 +18,12 @@ import {
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { updateEstadoEnvio } from "..//../services/UpdateEstadoEnvio"
+import { useNavigate } from 'react-router-dom';
 
 const estados = ['Creado', 'En sucursal', 'En tránsito', 'Entregado'];
 
 const DetalleEnvio = ({ envio, onClose, user }) => {
+    const navigate = useNavigate();
     const location = useLocation();
     const envioDesdeTabla = location.state?.envio;
 
@@ -185,8 +187,14 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     <Typography variant="caption" color="textSecondary">
                         Creado el: {new Date(datosEnvio.fechaCreacion).toLocaleDateString()}
                     </Typography>
-                    <Typography variant="caption" color="primary">
-                        Eventos en historial: {datosEnvio.historial?.length || 0}
+                    {/* Muestra cuántos movimientos tiene el historial para verificar la auditoría */}
+                    <Typography
+                        variant="caption"
+                        color="primary"
+                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                        onClick={() => navigate('/historial', { state: { historial: datosEnvio.historial } })}
+                    >
+                        Eventos de Cambio de Estado: {datosEnvio.historial?.length || 0}
                     </Typography>
                 </Box>
             </Card>
