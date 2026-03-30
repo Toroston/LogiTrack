@@ -4,7 +4,7 @@ import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import AltaEnvio from "./AltaEnvio";
 import { useNavigate } from "react-router-dom";
-import { Button, Chip } from "@mui/material";
+import { Button} from "@mui/material";
 
 const obtenerSaturacionPonderada = () => {
     const probabilidad = Math.random();
