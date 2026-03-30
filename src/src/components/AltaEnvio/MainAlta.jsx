@@ -4,11 +4,11 @@ import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import AltaEnvio from "./AltaEnvio";
 import { useNavigate } from "react-router-dom";
-import { Button} from "@mui/material";
+import { Button, Box, Typography, Paper } from "@mui/material";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 const obtenerSaturacionPonderada = () => {
     const probabilidad = Math.random();
-    
     if (probabilidad < 0.50) return "Baja";
     if (probabilidad < 0.85) return "Media";
     return "Alta";
@@ -142,7 +142,6 @@ const MainAlta = () => {
             ...columnStyle,
             ...headerStyle,
             Cell: (props) => {
-                /* eslint-disable react/prop-types */
                 const { row } = props;
                 return (
                     <Button
@@ -163,8 +162,35 @@ const MainAlta = () => {
     ];
 
     return (
-        <>
+        <Box sx={{ p: 2 }}>
             <AltaEnvio onCrear={crearEnvio} />
+            
+            {/* --- CONTADOR DE ENVIOS --- */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+                <Paper 
+                    elevation={2} 
+                    sx={{ 
+                        p: '10px 20px', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 2,
+                        borderRadius: '15px',
+                        borderLeft: '6px solid rgb(4, 170, 109)',
+                        bgcolor: '#f9f9f9'
+                    }}
+                >
+                    <LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 30 }} />
+                    <Box>
+                        <Typography variant="caption" sx={{ color: '#666', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                            Envíos Registrados
+                        </Typography>
+                        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', lineHeight: 1 }}>
+                            {envios.length}
+                        </Typography>
+                    </Box>
+                </Paper>
+            </Box>
+
             <MaterialReactTable
                 columns={columns}
                 data={envios}
@@ -192,7 +218,7 @@ const MainAlta = () => {
                     sorting: [{ id: 'fechaCreacion', desc: true }]
                 }}
             />
-        </>
+        </Box>
     );
 };
 
