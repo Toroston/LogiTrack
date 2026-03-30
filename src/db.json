@@ -95,6 +95,100 @@
           "usuario": "Supervisor_01"
         }
       ]
+    },
+    {
+      "id": "TRK-576192",
+      "trackingId": "TRK-576192",
+      "remitente": "Gabriel",
+      "destinatario": "Facundo",
+      "origen": "Matheu 2019",
+      "destino": "Ugarteche 1970",
+      "tipo": "Normal",
+      "distancia": "50",
+      "volumen": "0.25",
+      "ventanaHoraria": "08:00-12:00",
+      "restricciones": "Fragil",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-29T22:47:15.803Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-29T22:47:15.803Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-507100",
+      "trackingId": "TRK-507100",
+      "remitente": "Yo",
+      "destinatario": "Vos",
+      "origen": "Mi casa",
+      "destino": "Tu casa",
+      "tipo": "Normal",
+      "distancia": "100",
+      "volumen": "0.20",
+      "ventanaHoraria": "08:00-21:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Baja",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-30T06:55:49.135Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-30T06:55:49.135Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-277766",
+      "trackingId": "TRK-277766",
+      "remitente": "Test Express",
+      "destinatario": "Si",
+      "origen": "a",
+      "destino": "a",
+      "tipo": "Express",
+      "distancia": "100",
+      "volumen": "0.10",
+      "ventanaHoraria": "08:00-22:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Baja",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-30T07:01:16.123Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-30T07:01:16.123Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-99496",
+      "trackingId": "TRK-99496",
+      "remitente": "Test",
+      "destinatario": "Asfd",
+      "origen": "asd",
+      "destino": "asd",
+      "tipo": "Normal",
+      "distancia": "800",
+      "volumen": "1",
+      "ventanaHoraria": "08:00-12:00",
+      "restricciones": "Frio",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Alta",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-30T07:02:02.495Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-30T07:02:02.495Z",
+          "usuario": "Sistema"
+        }
+      ]
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

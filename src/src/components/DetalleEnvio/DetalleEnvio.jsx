@@ -26,7 +26,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
     const location = useLocation();
     const envioDesdeTabla = location.state?.envio;
 
-    // --- MOCK ACTUALIZADO CON DATOS LOGÍSTICOS ---
     const [datosEnvio, setDatosEnvio] = useState(envio || envioDesdeTabla || {
         id: 1, 
         trackingId: "TRK-841328",
@@ -38,7 +37,9 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
         distancia: 750,
         volumen: 2.5,
         ventanaHoraria: "09:00 - 18:00",
-        restricciones: "Frágil - Mantener vertical",
+        restricciones: "Frágil",
+        prioridad: "Media",
+        saturacionSimulada: "Media",
         estado: "En tránsito",
         fechaCreacion: new Date().toISOString(),
         historial: []
@@ -69,6 +70,17 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             default: return 'default';
         }
     };
+
+    const getPrioridadColor = (prioridad) => {
+        switch (prioridad) {
+            case 'Alta': return 'error';
+            case 'Media': return 'warning';
+            case 'Baja': return 'success';
+            default: return 'default';
+        }
+    };
+
+
 
     return (
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 6, mb: 4, px: 2 }}>
@@ -101,7 +113,16 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                         <Typography variant="overline" sx={{ fontWeight: 'bold' }}>Tracking ID</Typography>
                         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{datosEnvio.trackingId}</Typography>
                     </Box>
-                    <Chip label={datosEnvio.estado} color={getEstadoColor(datosEnvio.estado)} />
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                        {datosEnvio.prioridad && (
+                            <Chip 
+                                label={`Prioridad: ${datosEnvio.prioridad}`} 
+                                color={getPrioridadColor(datosEnvio.prioridad)} 
+                                variant="outlined"
+                            />
+                        )}
+                        <Chip label={datosEnvio.estado} color={getEstadoColor(datosEnvio.estado)} />
+                    </Box>
                 </Box>
 
                 <Divider />
@@ -128,21 +149,27 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                         Información de Carga
                     </Typography>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} md={4}>
                             <Typography variant="subtitle2" color="textSecondary">Distancia</Typography>
                             <Typography>{datosEnvio.distancia ? `${datosEnvio.distancia} km` : 'No especificada'}</Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} md={4}>
                             <Typography variant="subtitle2" color="textSecondary">Volumen</Typography>
                             <Typography>{datosEnvio.volumen ? `${datosEnvio.volumen} m³` : 'No especificado'}</Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} md={4}>
                             <Typography variant="subtitle2" color="textSecondary">Ventana Horaria</Typography>
                             <Typography>{datosEnvio.ventanaHoraria || 'Sin asignar'}</Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={6} md={4}>
                             <Typography variant="subtitle2" color="textSecondary">Restricciones</Typography>
                             <Typography>{datosEnvio.restricciones || 'Ninguna'}</Typography>
+                        </Grid>
+                        <Grid item xs={6} md={4}>
+                            <Typography variant="subtitle2" color="textSecondary">Saturación de Ruta</Typography>
+                            <Typography>
+                                {datosEnvio.saturacionSimulada || 'Media'}
+                            </Typography>
                         </Grid>
                     </Grid>
 
@@ -186,7 +213,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     <Typography variant="caption" color="textSecondary">
                         Creado el: {new Date(datosEnvio.fechaCreacion).toLocaleDateString()}
                     </Typography>
-                    {/* Muestra cuántos movimientos tiene el historial para verificar la auditoría */}
                     <Typography
                         variant="caption"
                         color="primary"

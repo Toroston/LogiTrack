@@ -20,6 +20,7 @@ const MenuPrincipal = ({ user, setUser }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center', 
         transition: 'all 0.3s ease-in-out',
         cursor: 'pointer',
         '&:hover': {
@@ -30,6 +31,7 @@ const MenuPrincipal = ({ user, setUser }) => {
         '&:active': {
             transform: 'translateY(-2px)',
             boxShadow: 2,
+            bgcolor: 'action.selected',
         }
     };
 

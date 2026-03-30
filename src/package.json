@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"set VITE_BASE_URL=http://localhost:4500&& vite\" \"npm run api\"",
+    "dev": "concurrently \"set VITE_BASE_URL=http://localhost:4500&& vite\" \"npm run api\" \"npm run api-ia\"",
     "start": "set VITE_BASE_URL=http://localhost:4500&& vite",
     "api": "json-server --watch db.json --port 3001",
+    "api-ia": "cd src/machinelearning && python api_ia.py",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "test": "echo \"Tests OK\"",

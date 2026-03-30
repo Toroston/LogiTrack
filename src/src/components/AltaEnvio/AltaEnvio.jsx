@@ -22,7 +22,7 @@ const AltaEnvio = ({ onCrear }) => {
         distancia: "",
         volumen: "",
         ventanaHoraria: "",
-        restricciones: ""
+        restricciones: "Ninguna"
     });
 
     const handleChange = (e) => {
@@ -30,20 +30,12 @@ const AltaEnvio = ({ onCrear }) => {
     };
 
     const handleSubmit = () => {
-        const { remitente, destinatario, origen, destino, distancia, volumen } = form;
-
-        if (!remitente || !destinatario || !origen || !destino || !distancia || !volumen) {
-            alert("Por favor, completa los campos obligatorios (Contacto, Ubicación, Distancia y Volumen)");
+        const { remitente, destinatario, origen, destino, distancia, volumen, ventanaHoraria } = form;
+        if (!remitente || !destinatario || !origen || !destino || !distancia || !volumen || !ventanaHoraria) {
+            alert("Por favor, completa todos los campos del envío.");
             return;
         }
-
-        onCrear({
-            ...form,
-            trackingId: `TRK-${Math.floor(Math.random() * 1000000)}`,
-            fechaCreacion: new Date().toISOString(),
-            estadoActual: "Creado"
-        });
-
+        onCrear(form);
         setForm({
             remitente: "",
             destinatario: "",
@@ -53,7 +45,7 @@ const AltaEnvio = ({ onCrear }) => {
             distancia: "",
             volumen: "",
             ventanaHoraria: "",
-            restricciones: ""
+            restricciones: "Ninguna"
         });
     };
 
@@ -101,7 +93,12 @@ const AltaEnvio = ({ onCrear }) => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <TextField fullWidth label="Restricciones" name="restricciones" placeholder="Ej: Frágil, No apilar" value={form.restricciones} onChange={handleChange} />
+                    <TextField select fullWidth label="Restricciones" name="restricciones" value={form.restricciones} onChange={handleChange}>
+                        <MenuItem value="Ninguna">Ninguna</MenuItem>
+                        <MenuItem value="Fragil">Fragil</MenuItem>
+                        <MenuItem value="Frio">Frio</MenuItem>
+                        <MenuItem value="Peligroso">Peligroso</MenuItem>
+                    </TextField>
                 </Grid>
 
                 <Grid item xs={12}>
