@@ -107,25 +107,6 @@ const MenuPrincipal = ({ user, setUser }) => {
                         </Typography>
                     </Paper>
                 </Grid>
-
-                {esAdmin && (
-                    <Grid item xs={12} sm={4}>
-                        <Paper 
-                            elevation={3} 
-                            sx={{ ...cardStyle }}
-                            onClick={() => navigate('/detalle')}
-                        >
-                            <AssignmentIcon sx={{ fontSize: 70, color: '#ed6c02', mb: 3 }} />
-                            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                Ejemplo de Detalle
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Ver diseño estático
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                )}
-
             </Grid>
         </Box>
     );

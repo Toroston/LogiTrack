@@ -18,6 +18,7 @@ import {
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { updateEstadoEnvio } from "..//../services/UpdateEstadoEnvio"
+import { deleteEnvio } from "../../services/DeleteEnvio";
 import { useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 
@@ -59,6 +60,18 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
         }
     };
 
+    const handleEliminar = async () => {
+        const confirmar = window.confirm("¿Seguro que querés eliminar este envío?");
+        if (!confirmar) return;
+
+        try {
+            await deleteEnvio(datosEnvio.id);
+            navigate('/'); // o a la lista de envíos
+        } catch (error) {
+            console.error("Error al eliminar:", error);
+        }
+    };
+
     const esSupervisor = user?.rol === "Supervisor";
 
     const getEstadoColor = (estado) => {
@@ -79,8 +92,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             default: return 'default';
         }
     };
-
-
 
     return (
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 6, mb: 4, px: 2 }}>
@@ -204,7 +215,23 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                                     </Button>
                                 </Grid>
                             </Grid>
+
+
+
+    <Box sx={{ mt: 3 }}>
+        <Button
+            variant="contained"
+            color="error"
+            fullWidth
+            onClick={handleEliminar}
+        >
+            Eliminar Envío
+        </Button>
+    </Box>
+
                         </Box>
+
+                        
                     )}
                 </CardContent>
 

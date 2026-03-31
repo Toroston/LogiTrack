@@ -142,6 +142,7 @@ const MainAlta = () => {
             ...columnStyle,
             ...headerStyle,
             Cell: (props) => {
+                /* eslint-disable react/prop-types */
                 const { row } = props;
                 return (
                     <Button
