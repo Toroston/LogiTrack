@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
@@ -134,16 +135,13 @@ const MainAlta = () => {
             header: "Fecha Alta",
             ...columnStyle,
             ...headerStyle,
-            /* eslint-disable react/prop-types */
             Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString('es-AR')
-            /* eslint-enable react/prop-types */
         },
         {
             id: 'acciones',
             header: "Acciones",
             ...columnStyle,
             ...headerStyle,
-            /* eslint-disable react/prop-types */
             Cell: ({ row }) => {
                 return (
                     <Button
@@ -160,7 +158,6 @@ const MainAlta = () => {
                     </Button>
                 );
             }
-            /* eslint-enable react/prop-types */
         }
     ];
 
