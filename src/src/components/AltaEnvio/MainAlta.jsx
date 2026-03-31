@@ -141,8 +141,8 @@ const MainAlta = () => {
             header: "Acciones",
             ...columnStyle,
             ...headerStyle,
-            Cell: (props) => {
-                const { row } = props;
+            Cell: ({ row }) => {
+                // eslint-disable-next-line react/prop-types
                 return (
                     <Button
                         variant="contained"
