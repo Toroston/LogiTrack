@@ -134,15 +134,17 @@ const MainAlta = () => {
             header: "Fecha Alta",
             ...columnStyle,
             ...headerStyle,
+            /* eslint-disable react/prop-types */
             Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString('es-AR')
+            /* eslint-disable react/prop-types */
         },
         {
             id: 'acciones',
             header: "Acciones",
             ...columnStyle,
             ...headerStyle,
+            /* eslint-disable react/prop-types */
             Cell: ({ row }) => {
-                // eslint-disable-next-line react/prop-types
                 return (
                     <Button
                         variant="contained"
@@ -158,6 +160,7 @@ const MainAlta = () => {
                     </Button>
                 );
             }
+            /* eslint-disable react/prop-types */
         }
     ];
 

@@ -189,6 +189,30 @@
           "usuario": "Sistema"
         }
       ]
+    },
+    {
+      "id": "TRK-300782",
+      "trackingId": "TRK-300782",
+      "remitente": "HOLA",
+      "destinatario": "CHAU",
+      "origen": "prueba",
+      "destino": "test",
+      "tipo": "Normal",
+      "distancia": "300",
+      "volumen": "5",
+      "ventanaHoraria": "08:00-20:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Baja",
+      "estado": "Creado",
+      "fechaCreacion": "2026-03-31T19:09:07.418Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-03-31T19:09:07.418Z",
+          "usuario": "Sistema"
+        }
+      ]
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
