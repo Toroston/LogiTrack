@@ -136,7 +136,7 @@ const MainAlta = () => {
             ...headerStyle,
             /* eslint-disable react/prop-types */
             Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString('es-AR')
-            /* eslint-disable react/prop-types */
+            /* eslint-enable react/prop-types */
         },
         {
             id: 'acciones',
@@ -160,7 +160,7 @@ const MainAlta = () => {
                     </Button>
                 );
             }
-            /* eslint-disable react/prop-types */
+            /* eslint-enable react/prop-types */
         }
     ];
 
