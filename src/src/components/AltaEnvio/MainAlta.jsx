@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
