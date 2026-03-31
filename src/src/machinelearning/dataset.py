@@ -41,7 +41,7 @@ def generar_dataset(cantidad=1500):
     
     df.to_csv("dataset_envios_mock.csv", index=False, encoding='utf-8')
     
-    print("¡Dataset actualizado con éxito! Así quedaron distribuidas las prioridades:")
+    print("Dataset creado, prioridades:")
     print(df['prioridad'].value_counts())
 
 if __name__ == "__main__":
