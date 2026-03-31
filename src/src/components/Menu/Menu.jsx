@@ -2,7 +2,6 @@ import { Box, Typography, Paper, Grid, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import SearchIcon from '@mui/icons-material/Search';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import Logo from '../../assets/logo.png';
 import PropTypes from "prop-types";
 
@@ -107,25 +106,6 @@ const MenuPrincipal = ({ user, setUser }) => {
                         </Typography>
                     </Paper>
                 </Grid>
-
-                {esAdmin && (
-                    <Grid item xs={12} sm={4}>
-                        <Paper 
-                            elevation={3} 
-                            sx={{ ...cardStyle }}
-                            onClick={() => navigate('/detalle')}
-                        >
-                            <AssignmentIcon sx={{ fontSize: 70, color: '#ed6c02', mb: 3 }} />
-                            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                Ejemplo de Detalle
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Ver diseño estático
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                )}
-
             </Grid>
         </Box>
     );

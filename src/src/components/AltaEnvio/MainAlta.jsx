@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
@@ -142,7 +141,9 @@ const MainAlta = () => {
             header: "Acciones",
             ...columnStyle,
             ...headerStyle,
-            Cell: ({ row }) => {
+            Cell: (props) => {
+                /* eslint-disable react/prop-types */
+                const { row } = props;
                 return (
                     <Button
                         variant="contained"
