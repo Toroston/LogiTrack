@@ -15,14 +15,10 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 const getEstadoIcon = (estado) => {
     switch (estado) {
-        case 'En sucursal':
-            return <StoreIcon color="warning" />;
-        case 'En tránsito':
-            return <LocalShippingIcon color="info" />;
-        case 'Entregado':
-            return <CheckCircleIcon color="success" />;
-        default:
-            return <FiberManualRecordIcon color="disabled" />;
+        case 'En sucursal': return <StoreIcon color="warning" />;
+        case 'En tránsito': return <LocalShippingIcon color="info" />;
+        case 'Entregado': return <CheckCircleIcon color="success" />;
+        default: return <FiberManualRecordIcon color="disabled" />;
     }
 };
 
@@ -34,54 +30,36 @@ const HistorialEventos = () => {
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 6, px: 2 }}>
             <BackButton />
 
-            <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold' }}>
+            <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold', mt: 2 }}>
                 Historial de Envío
             </Typography>
 
             {historial.length === 0 ? (
                 <Typography>No hay eventos registrados</Typography>
             ) : (
-                <Stack spacing={3}>
-                    {historial.map((evento, index) => (
+                <Stack spacing={3} sx={{ mb: 4 }}>
+                    {[...historial].reverse().map((evento, index) => (
                         <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                            
-                            {/* Línea + icono */}
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mr: 2 }}>
                                 {getEstadoIcon(evento.estado)}
-
                                 {index !== historial.length - 1 && (
-                                    <Box
-                                        sx={{
-                                            width: '2px',
-                                            height: 60,
-                                            bgcolor: 'grey.300',
-                                            mt: 1
-                                        }}
-                                    />
+                                    <Box sx={{ width: '2px', height: 60, bgcolor: 'grey.300', mt: 1 }} />
                                 )}
                             </Box>
 
-                            {/* Card */}
                             <Card sx={{ flex: 1, borderRadius: 3, boxShadow: 2 }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                                             {evento.estado}
                                         </Typography>
-
-                                        <Chip
-                                            label={evento.usuario}
-                                            size="small"
-                                            variant="outlined"
-                                        />
+                                        <Chip label={evento.usuario} size="small" variant="outlined" />
                                     </Box>
-
                                     <Typography variant="body2" color="text.secondary">
-                                        {new Date(evento.timestamp).toLocaleDateString()}
+                                        {new Date(evento.timestamp).toLocaleString('es-AR')}
                                     </Typography>
                                 </CardContent>
                             </Card>
-
                         </Box>
                     ))}
                 </Stack>

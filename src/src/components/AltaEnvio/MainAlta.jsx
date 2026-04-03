@@ -166,7 +166,6 @@ const MainAlta = () => {
         <Box sx={{ p: 2 }}>
             <AltaEnvio onCrear={crearEnvio} />
             
-            {/* --- CONTADOR DE ENVIOS --- */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
                 <Paper 
                     elevation={2} 
