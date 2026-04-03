@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import {
     Card,
     CardContent,
@@ -17,41 +17,41 @@ import {
 } from '@mui/material';
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { updateEstadoEnvio } from "..//../services/UpdateEstadoEnvio"
+import { updateEstadoEnvio } from "../../services/UpdateEstadoEnvio";
 import { deleteEnvio } from "../../services/DeleteEnvio";
-import { useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 
 const DetalleEnvio = ({ envio, onClose, user }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const envioDesdeTabla = location.state?.envio;
+    const { id } = useParams();
 
-    const [datosEnvio, setDatosEnvio] = useState(envio || envioDesdeTabla || {
-        id: 1, 
-        trackingId: "TRK-841328",
-        remitente: "Juan Pérez",
-        origen: "Sucursal Centro, CABA",
-        tipo: "Express",
-        destinatario: "María Gómez",
-        destino: "Calle Falsa 123, Córdoba",
-        distancia: 750,
-        volumen: 2.5,
-        ventanaHoraria: "09:00 - 18:00",
-        restricciones: "Frágil",
-        prioridad: "Media",
-        saturacionSimulada: "Media",
-        estado: "En tránsito",
-        fechaCreacion: new Date().toISOString(),
-        historial: []
-    });
-
+    const [datosEnvio, setDatosEnvio] = useState(envio || location.state?.envio || null);
     const [nuevoEstado, setNuevoEstado] = useState('');
+
+    const cargarDatosFrescos = useCallback(async () => {
+        const targetId = id || datosEnvio?.id;
+        if (!targetId) return;
+
+        try {
+            const res = await fetch(`http://localhost:3001/envios/${targetId}`);
+            if (res.ok) {
+                const data = await res.json();
+                setDatosEnvio(data);
+            }
+        } catch (error) {
+            console.error("Error al refrescar datos:", error);
+        }
+    }, [id, datosEnvio?.id]);
+
+    useEffect(() => {
+        cargarDatosFrescos();
+    }, [cargarDatosFrescos]);
 
     const handleActualizarEstado = async () => {
         if (!nuevoEstado) return;
         try {
-            const res = await updateEstadoEnvio(datosEnvio.id, nuevoEstado, "Supervisor_01");
+            const res = await updateEstadoEnvio(datosEnvio.id, nuevoEstado, user?.nombre || "Usuario");
             const dataActualizada = await res.json();
             setDatosEnvio(dataActualizada);
             setNuevoEstado('');
@@ -63,14 +63,15 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
     const handleEliminar = async () => {
         const confirmar = window.confirm("¿Seguro que querés eliminar este envío?");
         if (!confirmar) return;
-
         try {
             await deleteEnvio(datosEnvio.id);
-            navigate('/'); // o a la lista de envíos
+            navigate('/envios'); 
         } catch (error) {
             console.error("Error al eliminar:", error);
         }
     };
+
+    if (!datosEnvio) return <Typography sx={{ p: 4 }}>Cargando datos del envío...</Typography>;
 
     const esSupervisor = user?.rol === "Supervisor";
 
@@ -100,11 +101,9 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     <IconButton
                         onClick={onClose}
                         sx={{
-                            backgroundColor: '#f44336',
-                            color: 'white',
+                            backgroundColor: '#f44336', color: 'white',
                             '&:hover': { backgroundColor: '#d32f2f' },
-                            width: 40,
-                            height: 40
+                            width: 40, height: 40
                         }}
                     >
                         <CloseIcon />
@@ -178,9 +177,7 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                         </Grid>
                         <Grid item xs={6} md={4}>
                             <Typography variant="subtitle2" color="textSecondary">Saturación de Ruta</Typography>
-                            <Typography>
-                                {datosEnvio.saturacionSimulada || 'Media'}
-                            </Typography>
+                            <Typography>{datosEnvio.saturacionSimulada || 'Media'}</Typography>
                         </Grid>
                     </Grid>
 
@@ -216,22 +213,17 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                                 </Grid>
                             </Grid>
 
-
-
-    <Box sx={{ mt: 3 }}>
-        <Button
-            variant="contained"
-            color="error"
-            fullWidth
-            onClick={handleEliminar}
-        >
-            Eliminar Envío
-        </Button>
-    </Box>
-
+                            <Box sx={{ mt: 3 }}>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    fullWidth
+                                    onClick={handleEliminar}
+                                >
+                                    Eliminar Envío
+                                </Button>
+                            </Box>
                         </Box>
-
-                        
                     )}
                 </CardContent>
 
