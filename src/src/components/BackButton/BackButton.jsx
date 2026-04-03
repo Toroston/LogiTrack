@@ -5,18 +5,25 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const BackButton = () => {
     const navigate = useNavigate();
 
+    const handleBack = () => {
+        if (window.history.length <= 2) {
+            navigate('/');
+        } else {
+            navigate(-1);
+        }
+    };
+
     return (
         <IconButton
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             sx={{
-                backgroundColor: 'red',
+                backgroundColor: '#f44336',
                 color: 'white',
-                '&:hover': {
-                    backgroundColor: 'darkred'
-                },
-                width: 50,
-                height: 50,
-                borderRadius: '50%'
+                '&:hover': { backgroundColor: '#d32f2f' },
+                width: 45,
+                height: 45,
+                borderRadius: '50%',
+                boxShadow: 2
             }}
         >
             <ArrowBackIcon />
