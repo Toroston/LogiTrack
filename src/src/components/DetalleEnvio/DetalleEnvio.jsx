@@ -65,7 +65,12 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
         if (!confirmar) return;
         try {
             await deleteEnvio(datosEnvio.id);
-            navigate('/envios'); 
+            
+            if (onClose) {
+                onClose();
+            } else {
+                navigate('/envios', { replace: true });
+            }
         } catch (error) {
             console.error("Error al eliminar:", error);
         }
@@ -125,9 +130,9 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         {datosEnvio.prioridad && (
-                            <Chip 
-                                label={`Prioridad: ${datosEnvio.prioridad}`} 
-                                color={getPrioridadColor(datosEnvio.prioridad)} 
+                            <Chip
+                                label={`Prioridad: ${datosEnvio.prioridad}`}
+                                color={getPrioridadColor(datosEnvio.prioridad)}
                                 variant="outlined"
                             />
                         )}
