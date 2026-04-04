@@ -11,6 +11,12 @@ jest.mock("../../src/services/DeleteEnvio", () => ({
   deleteEnvio: jest.fn(),
 }));
 
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({})
+  })
+);
+
 import { updateEstadoEnvio } from "../../src/services/UpdateEstadoEnvio";
 
 const envioMock = {
@@ -32,7 +38,10 @@ const envioMock = {
   historial: []
 };
 
-const supervisorUser = { rol: "Supervisor" };
+const supervisorUser = {
+  rol: "Supervisor",
+  nombre: "Supervisor_01"
+};
 
 test("CP10 - Supervisor cambia estado de envío", async () => {
   // Mock de la respuesta del updateEstadoEnvio

@@ -24,6 +24,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import RouteIcon from '@mui/icons-material/Route';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import PropTypes from "prop-types";
 
 const obtenerSaturacionPonderada = () => {
     const probabilidad = Math.random();
@@ -138,18 +139,20 @@ const MainAlta = () => {
     });
 
     const columns = [
-        { 
-            accessorKey: "trackingId", 
-            header: "Tracking ID", 
-            ...columnStyle, 
+        {
+            accessorKey: "trackingId",
+            header: "Tracking ID",
+            ...columnStyle,
             ...headerStyle,
+            // eslint-disable-next-line react/prop-types
             Cell: ({ cell }) => {
+                // eslint-disable-next-line react/prop-types
                 const id = cell.getValue();
                 return (
-                    <Box 
-                        sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
                             justifyContent: 'center',
                             gap: 1,
                             '&:hover .copy-button': { opacity: 1 }
@@ -157,12 +160,12 @@ const MainAlta = () => {
                     >
                         <Typography variant="body2" sx={{ fontWeight: '500' }}>{id}</Typography>
                         <Tooltip title={copySuccess === id ? "¡Copiado!" : "Copiar ID"} arrow>
-                            <IconButton 
+                            <IconButton
                                 className="copy-button"
-                                size="small" 
+                                size="small"
                                 onClick={() => handleCopy(id)}
-                                sx={{ 
-                                    opacity: 0, 
+                                sx={{
+                                    opacity: 0,
                                     transition: 'opacity 0.2s',
                                     padding: '2px'
                                 }}
@@ -178,13 +181,28 @@ const MainAlta = () => {
         { accessorKey: "origen", header: "Origen", ...columnStyle, ...headerStyle },
         {
             accessorKey: "prioridad", header: "Prioridad", ...columnStyle, ...headerStyle,
-            Cell: ({ cell }) => (
-                <Chip
-                    label={cell.getValue()}
-                    color={cell.getValue() === 'Alta' ? 'error' : cell.getValue() === 'Media' ? 'warning' : 'success'}
-                    size="small" variant="outlined" sx={{ fontWeight: 'bold', minWidth: '70px' }}
-                />
-            )
+            Cell: (props) => {
+                // eslint-disable-next-line react/prop-types
+                const { cell } = props;
+                // eslint-disable-next-line react/prop-types
+                const value = cell.getValue();
+
+                return (
+                    <Chip
+                        label={value}
+                        color={
+                            value === 'Alta'
+                                ? 'error'
+                                : value === 'Media'
+                                    ? 'warning'
+                                    : 'success'
+                        }
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontWeight: 'bold', minWidth: '70px' }}
+                    />
+                );
+            }
         },
         { accessorKey: "estado", header: "Estado", ...columnStyle, ...headerStyle },
         {
@@ -193,9 +211,11 @@ const MainAlta = () => {
         },
         {
             id: 'acciones', header: "Acciones", ...columnStyle, ...headerStyle,
+            // eslint-disable-next-line react/prop-types
             Cell: ({ row }) => (
                 <Button
                     variant="contained" size="small" sx={{ backgroundColor: "#1976d2" }}
+                    // eslint-disable-next-line react/prop-types
                     onClick={() => navigate(`/detalle/${row.original.trackingId}`, { state: { envio: row.original } })}
                 > Ver Detalle </Button>
             )
@@ -223,6 +243,15 @@ const MainAlta = () => {
             </Box>
         </Paper>
     );
+    StatCard.propTypes = {
+        label: PropTypes.string,
+        count: PropTypes.number,
+        color: PropTypes.string,
+        icon: PropTypes.node,
+        type: PropTypes.string,
+        value: PropTypes.string,
+        active: PropTypes.bool
+    };
 
     return (
         <Box sx={{ p: 2, bgcolor: '#f4f6f8', minHeight: '100vh' }}>
@@ -232,14 +261,14 @@ const MainAlta = () => {
 
             <AltaEnvio onCrear={crearEnvio} />
             <Grid container spacing={2} sx={{ mb: 3, width: '100%', ml: 0 }}>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Todos los Envíos" count={envios.length} color="rgb(4, 170, 109)" icon={<LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 28 }} />} type="Todos" value="Todos" active={valorFiltro === "Todos"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Alta" count={envios.filter(e => e.prioridad === "Alta").length} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 28 }} />} type="Prioridad" value="Alta" active={filtroTipo === "Prioridad" && valorFiltro === "Alta"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Media" count={envios.filter(e => e.prioridad === "Media").length} color="#ed6c02" icon={<WarningAmberIcon sx={{ color: '#ed6c02', fontSize: 28 }} />} type="Prioridad" value="Media" active={filtroTipo === "Prioridad" && valorFiltro === "Media"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Baja" count={envios.filter(e => e.prioridad === "Baja").length} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 28 }} />} type="Prioridad" value="Baja" active={filtroTipo === "Prioridad" && valorFiltro === "Baja"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Creados" count={envios.filter(e => e.estado === "Creado").length} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 28 }} />} type="Estado" value="Creado" active={filtroTipo === "Estado" && valorFiltro === "Creado"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 28 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="En Camino" count={envios.filter(e => e.estado === "En camino").length} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 28 }} />} type="Estado" value="En camino" active={filtroTipo === "Estado" && valorFiltro === "En camino"}/></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 28 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"}/></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Todos los Envíos" count={envios.length} color="rgb(4, 170, 109)" icon={<LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 28 }} />} type="Todos" value="Todos" active={valorFiltro === "Todos"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Alta" count={envios.filter(e => e.prioridad === "Alta").length} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 28 }} />} type="Prioridad" value="Alta" active={filtroTipo === "Prioridad" && valorFiltro === "Alta"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Media" count={envios.filter(e => e.prioridad === "Media").length} color="#ed6c02" icon={<WarningAmberIcon sx={{ color: '#ed6c02', fontSize: 28 }} />} type="Prioridad" value="Media" active={filtroTipo === "Prioridad" && valorFiltro === "Media"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Baja" count={envios.filter(e => e.prioridad === "Baja").length} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 28 }} />} type="Prioridad" value="Baja" active={filtroTipo === "Prioridad" && valorFiltro === "Baja"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Creados" count={envios.filter(e => e.estado === "Creado").length} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 28 }} />} type="Estado" value="Creado" active={filtroTipo === "Estado" && valorFiltro === "Creado"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 28 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="En Camino" count={envios.filter(e => e.estado === "En camino").length} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 28 }} />} type="Estado" value="En camino" active={filtroTipo === "Estado" && valorFiltro === "En camino"} /></Grid>
+                <Grid item xs={12} sm={6} md={3}><StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 28 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"} /></Grid>
             </Grid>
             <MaterialReactTable
                 columns={columns}
