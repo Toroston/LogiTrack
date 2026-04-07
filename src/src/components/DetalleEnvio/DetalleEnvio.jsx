@@ -13,10 +13,16 @@ import {
     Select,
     MenuItem,
     FormControl,
-    InputLabel
+    InputLabel,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
 } from '@mui/material';
 import BackButton from '../BackButton/BackButton';
 import CloseIcon from '@mui/icons-material/Close';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { updateEstadoEnvio } from "../../services/UpdateEstadoEnvio";
 import { deleteEnvio } from "../../services/DeleteEnvio";
 import PropTypes from "prop-types";
@@ -28,6 +34,7 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
 
     const [datosEnvio, setDatosEnvio] = useState(envio || location.state?.envio || null);
     const [nuevoEstado, setNuevoEstado] = useState('');
+    const [openDelete, setOpenDelete] = useState(false);
 
     const cargarDatosFrescos = useCallback(async () => {
         const targetId = id || datosEnvio?.id;
@@ -60,16 +67,16 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
         }
     };
 
-    const handleEliminar = async () => {
-        const confirmar = window.confirm("¿Seguro que querés eliminar este envío?");
-        if (!confirmar) return;
+    const handleConfirmarEliminar = async () => {
         try {
             await deleteEnvio(datosEnvio.id);
+            setOpenDelete(false);
             
             if (onClose) {
                 onClose();
             } else {
-                navigate('/envios', { replace: true });
+                const fallback = location.state?.from === 'busqueda' ? '/busqueda' : '/envios';
+                navigate(fallback, { replace: true });
             }
         } catch (error) {
             console.error("Error al eliminar:", error);
@@ -223,7 +230,7 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                                     variant="contained"
                                     color="error"
                                     fullWidth
-                                    onClick={handleEliminar}
+                                    onClick={() => setOpenDelete(true)}
                                 >
                                     Eliminar Envío
                                 </Button>
@@ -247,6 +254,30 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
                     </Typography>
                 </Box>
             </Card>
+
+            <Dialog 
+                open={openDelete} 
+                onClose={() => setOpenDelete(false)}
+                PaperProps={{ sx: { borderRadius: 3, p: 1, maxWidth: 400 } }}
+            >
+                <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <WarningAmberIcon color="error" />
+                    ¿Confirmar eliminación?
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Esta acción no se puede deshacer. Se eliminará permanentemente el envío <strong>{datosEnvio.id}</strong>.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{ p: 2, justifyContent: 'space-between' }}>
+                    <Button onClick={() => setOpenDelete(false)} variant="outlined" color="inherit" sx={{ borderRadius: 2 }}>
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleConfirmarEliminar} color="error" variant="contained" sx={{ borderRadius: 2, px: 3 }}>
+                        Eliminar Definitivamente
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
