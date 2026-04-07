@@ -69,8 +69,6 @@ const calcularHorasVentana = (ventanaString) => {
 
 const MainAlta = () => {
     const [envios, setEnvios] = useState([]);
-    
-    // --- NUEVA LÓGICA DE FILTROS SEPARADOS ---
     const [filtroPrioridad, setFiltroPrioridad] = useState("Todos");
     const [filtroEstado, setFiltroEstado] = useState("Todos");
     
@@ -87,7 +85,6 @@ const MainAlta = () => {
 
     useEffect(() => { cargarEnvios(); }, []);
 
-    // 1. Primero filtramos por fechas para tener una base de datos temporal
     const enviosPorFecha = useMemo(() => {
         return envios.filter(envio => {
             const fechaEnvio = dayjs(envio.fechaCreacion);
@@ -96,7 +93,6 @@ const MainAlta = () => {
         });
     }, [envios, fechaInicio, fechaFin]);
 
-    // 2. Luego aplicamos los filtros cruzados de Prioridad y Estado para la TABLA
     const enviosFiltrados = useMemo(() => {
         return enviosPorFecha.filter(envio => {
             const cumplePrioridad = filtroPrioridad === "Todos" || envio.prioridad === filtroPrioridad;
@@ -104,8 +100,6 @@ const MainAlta = () => {
             return cumplePrioridad && cumpleEstado;
         });
     }, [enviosPorFecha, filtroPrioridad, filtroEstado]);
-
-    // 3. Calculamos los porcentajes basados en el universo actual (enviosPorFecha)
     const porcentajes = useMemo(() => {
         const total = enviosPorFecha.length;
         if (total === 0) return { prioridad: {}, estado: {} };
@@ -131,8 +125,6 @@ const MainAlta = () => {
             setFiltroPrioridad("Todos");
             setFiltroEstado("Todos");
         } else if (tipo === "Prioridad") {
-            // Si tocamos la que ya está activa, la desactivamos (opcional), 
-            // pero según tu pedido, simplemente se setea.
             setFiltroPrioridad(valor);
         } else if (tipo === "Estado") {
             setFiltroEstado(valor);
@@ -292,7 +284,6 @@ const MainAlta = () => {
                     <AltaEnvio onCrear={crearEnvio} />
                     
                     <Grid container spacing={3} sx={{ mb: 4, width: '100%', ml: 0 }}>
-                        {/* CARD TOTAL: Limpia todos los filtros al hacer clic */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard 
                                 label="Total Envíos" 
@@ -304,8 +295,6 @@ const MainAlta = () => {
                                 active={filtroPrioridad === "Todos" && filtroEstado === "Todos"} 
                             />
                         </Grid>
-
-                        {/* CARDS DE PRIORIDAD: Solo afectan filtroPrioridad */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Prioridad Alta" count={enviosPorFecha.filter(e => e.prioridad === "Alta").length} fixedPercentage={porcentajes.prioridad["Alta"]} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 32 }} />} type="Prioridad" value="Alta" active={filtroPrioridad === "Alta"} />
                         </Grid>
@@ -315,8 +304,6 @@ const MainAlta = () => {
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Prioridad Baja" count={enviosPorFecha.filter(e => e.prioridad === "Baja").length} fixedPercentage={porcentajes.prioridad["Baja"]} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 32 }} />} type="Prioridad" value="Baja" active={filtroPrioridad === "Baja"} />
                         </Grid>
-                        
-                        {/* CARDS DE ESTADO: Solo afectan filtroEstado */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Creados" count={enviosPorFecha.filter(e => e.estado === "Creado").length} fixedPercentage={porcentajes.estado["Creado"]} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 32 }} />} type="Estado" value="Creado" active={filtroEstado === "Creado"} />
                         </Grid>
@@ -353,7 +340,6 @@ const MainAlta = () => {
                                         </IconButton>
                                     </Tooltip>
                                 )}
-                                {/* Indicador de filtros activos en la tabla */}
                                 {(filtroPrioridad !== "Todos" || filtroEstado !== "Todos") && (
                                     <Chip 
                                         label={`Filtros: ${filtroPrioridad} + ${filtroEstado}`} 
