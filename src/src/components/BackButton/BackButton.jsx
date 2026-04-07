@@ -1,14 +1,28 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const BackButton = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleBack = () => {
-        if (window.history.length <= 2) {
+        const path = location.pathname;
+        const from = location.state?.from;
+
+        // Si estamos en el detalle, volvemos a donde nos diga el state
+        if (path.startsWith('/detalle')) {
+            if (from === 'busqueda') {
+                navigate('/busqueda');
+            } else {
+                navigate('/envios'); // Fallback por defecto a MainAlta
+            }
+        } 
+        // Si estamos en las pantallas principales, volvemos al menú
+        else if (path === '/envios' || path === '/busqueda' || path === '/historial') {
             navigate('/');
-        } else {
+        } 
+        else {
             navigate(-1);
         }
     };
@@ -20,10 +34,8 @@ const BackButton = () => {
                 backgroundColor: '#f44336',
                 color: 'white',
                 '&:hover': { backgroundColor: '#d32f2f' },
-                width: 45,
-                height: 45,
-                borderRadius: '50%',
-                boxShadow: 2
+                width: 45, height: 45,
+                borderRadius: '50%', boxShadow: 2, mb: 2
             }}
         >
             <ArrowBackIcon />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
@@ -61,6 +61,34 @@ const MainAlta = () => {
     useEffect(() => {
         cargarEnvios();
     }, []);
+
+    // --- LÓGICA DE CÁLCULO DE PORCENTAJES SIN ERROR DE SUMA ---
+    const porcentajes = useMemo(() => {
+        const total = envios.length;
+        if (total === 0) return { prioridad: {}, estado: {} };
+
+        const calcularGrupo = (claves, propiedad) => {
+            let conteos = claves.map(clave => envios.filter(e => e[propiedad] === clave).length);
+            let redondeados = conteos.map(c => Math.round((c / total) * 100));
+            
+            // Ajuste de error acumulado (para que sume exactamente 100)
+            let sumaRedondeada = redondeados.reduce((a, b) => a + b, 0);
+            let diferencia = 100 - sumaRedondeada;
+
+            if (diferencia !== 0) {
+                // Buscamos el índice del que tiene más elementos para absorber la diferencia
+                const indiceMayor = conteos.indexOf(Math.max(...conteos));
+                redondeados[indiceMayor] += diferencia;
+            }
+
+            return claves.reduce((obj, clave, i) => ({ ...obj, [clave]: redondeados[i] }), {});
+        };
+
+        return {
+            prioridad: calcularGrupo(["Alta", "Media", "Baja"], "prioridad"),
+            estado: calcularGrupo(["Creado", "En sucursal", "En tránsito", "Entregado"], "estado")
+        };
+    }, [envios]);
 
     const enviosFiltrados = envios.filter(envio => {
         if (valorFiltro === "Todos") return true;
@@ -144,31 +172,17 @@ const MainAlta = () => {
             header: "Tracking ID",
             ...columnStyle,
             ...headerStyle,
-            // eslint-disable-next-line react/prop-types
             Cell: ({ cell }) => {
-                // eslint-disable-next-line react/prop-types
                 const id = cell.getValue();
                 return (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 1,
-                            '&:hover .copy-button': { opacity: 1 }
-                        }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, '&:hover .copy-button': { opacity: 1 } }}>
                         <Typography variant="body2" sx={{ fontWeight: '500' }}>{id}</Typography>
                         <Tooltip title={copySuccess === id ? "¡Copiado!" : "Copiar ID"} arrow>
                             <IconButton
                                 className="copy-button"
                                 size="small"
                                 onClick={() => handleCopy(id)}
-                                sx={{
-                                    opacity: 0,
-                                    transition: 'opacity 0.2s',
-                                    padding: '2px'
-                                }}
+                                sx={{ opacity: 0, transition: 'opacity 0.2s', padding: '2px' }}
                             >
                                 <ContentCopyIcon sx={{ fontSize: '1rem', color: 'rgb(4, 170, 109)' }} />
                             </IconButton>
@@ -182,21 +196,12 @@ const MainAlta = () => {
         {
             accessorKey: "prioridad", header: "Prioridad", ...columnStyle, ...headerStyle,
             Cell: (props) => {
-                // eslint-disable-next-line react/prop-types
                 const { cell } = props;
-                // eslint-disable-next-line react/prop-types
                 const value = cell.getValue();
-
                 return (
                     <Chip
                         label={value}
-                        color={
-                            value === 'Alta'
-                                ? 'error'
-                                : value === 'Media'
-                                    ? 'warning'
-                                    : 'success'
-                        }
+                        color={value === 'Alta' ? 'error' : value === 'Media' ? 'warning' : 'success'}
                         size="small"
                         variant="outlined"
                         sx={{ fontWeight: 'bold', minWidth: '70px' }}
@@ -211,41 +216,68 @@ const MainAlta = () => {
         },
         {
             id: 'acciones', header: "Acciones", ...columnStyle, ...headerStyle,
-            // eslint-disable-next-line react/prop-types
             Cell: ({ row }) => (
                 <Button
                     variant="contained" size="small" sx={{ backgroundColor: "#1976d2" }}
-                    // eslint-disable-next-line react/prop-types
-                    onClick={() => navigate(`/detalle/${row.original.trackingId}`, { state: { envio: row.original } })}
+                    onClick={() => navigate(`/detalle/${row.original.trackingId}`, { 
+                        state: { envio: row.original, from: 'envios' } 
+                    })}
                 > Ver Detalle </Button>
             )
         }
     ];
 
-    const StatCard = ({ label, count, color, icon, type, value, active }) => (
-        <Paper
-            elevation={active ? 4 : 1}
-            onClick={() => manejarFiltro(type, value)}
-            sx={{
-                p: '10px 12px', display: 'flex', alignItems: 'center', gap: 1.5, borderRadius: '12px',
-                borderLeft: `5px solid ${color}`, bgcolor: active ? '#f0f0f0' : '#fff', cursor: 'pointer',
-                transition: 'all 0.2s ease', width: '100%', boxSizing: 'border-box',
-                border: active ? `1.5px solid ${color}` : '1px solid #eee',
-                '&:hover': { boxShadow: 3, transform: 'translateY(-2px)' }
-            }}
-        >
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</Box>
-            <Box sx={{ overflow: 'hidden' }}>
-                <Typography variant="caption" sx={{ color: '#666', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase', display: 'block', whiteSpace: 'nowrap' }}>
-                    {label}
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', lineHeight: 1.2 }}>{count}</Typography>
-            </Box>
-        </Paper>
-    );
+    const StatCard = ({ label, count, fixedPercentage, color, icon, type, value, active }) => {
+        return (
+            <Paper
+                elevation={active ? 4 : 1}
+                onClick={() => manejarFiltro(type, value)}
+                sx={{
+                    p: '20px 16px',
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 2, 
+                    borderRadius: '16px',
+                    borderLeft: `6px solid ${color}`, 
+                    bgcolor: active ? '#f8f9fa' : '#fff', 
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease-in-out', 
+                    width: '100%', 
+                    boxSizing: 'border-box',
+                    minHeight: '110px',
+                    border: active ? `1.5px solid ${color}` : '1px solid #eee',
+                    '&:hover': { boxShadow: 4, transform: 'translateY(-3px)' }
+                }}
+            >
+                <Box sx={{ 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    backgroundColor: `${color}15`, borderRadius: '12px', p: 1.5
+                }}>
+                    {icon}
+                </Box>
+                <Box sx={{ overflow: 'hidden', flexGrow: 1 }}>
+                    <Typography variant="caption" sx={{ color: '#666', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', display: 'block', mb: 0.5 }}>
+                        {label}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h4" sx={{ fontWeight: '800', color: '#333', lineHeight: 1 }}>
+                            {count}
+                        </Typography>
+                        {type !== "Todos" && (
+                            <Typography variant="h5" sx={{ color: color, fontWeight: '700', opacity: 0.9, lineHeight: 1 }}>
+                                {fixedPercentage}%
+                            </Typography>
+                        )}
+                    </Box>
+                </Box>
+            </Paper>
+        );
+    };
+
     StatCard.propTypes = {
         label: PropTypes.string,
         count: PropTypes.number,
+        fixedPercentage: PropTypes.number,
         color: PropTypes.string,
         icon: PropTypes.node,
         type: PropTypes.string,
@@ -253,23 +285,44 @@ const MainAlta = () => {
         active: PropTypes.bool
     };
 
+    const totalEnvios = envios.length;
+
     return (
-        <Box sx={{ p: 2, bgcolor: '#f4f6f8', minHeight: '100vh' }}>
-            <Box sx={{ mb: 2 }}>
+        <Box sx={{ p: 3, bgcolor: '#f4f6f8', minHeight: '100vh' }}>
+            <Box sx={{ mb: 3 }}>
                 <BackButton />
             </Box>
 
             <AltaEnvio onCrear={crearEnvio} />
-            <Grid container spacing={2} sx={{ mb: 3, width: '100%', ml: 0 }}>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Todos los Envíos" count={envios.length} color="rgb(4, 170, 109)" icon={<LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 28 }} />} type="Todos" value="Todos" active={valorFiltro === "Todos"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Alta" count={envios.filter(e => e.prioridad === "Alta").length} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 28 }} />} type="Prioridad" value="Alta" active={filtroTipo === "Prioridad" && valorFiltro === "Alta"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Media" count={envios.filter(e => e.prioridad === "Media").length} color="#ed6c02" icon={<WarningAmberIcon sx={{ color: '#ed6c02', fontSize: 28 }} />} type="Prioridad" value="Media" active={filtroTipo === "Prioridad" && valorFiltro === "Media"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Prioridad Baja" count={envios.filter(e => e.prioridad === "Baja").length} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 28 }} />} type="Prioridad" value="Baja" active={filtroTipo === "Prioridad" && valorFiltro === "Baja"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Creados" count={envios.filter(e => e.estado === "Creado").length} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 28 }} />} type="Estado" value="Creado" active={filtroTipo === "Estado" && valorFiltro === "Creado"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 28 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="En Camino" count={envios.filter(e => e.estado === "En camino").length} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 28 }} />} type="Estado" value="En camino" active={filtroTipo === "Estado" && valorFiltro === "En camino"} /></Grid>
-                <Grid item xs={12} sm={6} md={3}><StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 28 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"} /></Grid>
+            
+            <Grid container spacing={3} sx={{ mb: 4, width: '100%', ml: 0 }}>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Total Envíos" count={totalEnvios} color="rgb(4, 170, 109)" icon={<LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 32 }} />} type="Todos" value="Todos" active={valorFiltro === "Todos"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Prioridad Alta" count={envios.filter(e => e.prioridad === "Alta").length} fixedPercentage={porcentajes.prioridad["Alta"]} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 32 }} />} type="Prioridad" value="Alta" active={filtroTipo === "Prioridad" && valorFiltro === "Alta"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Prioridad Media" count={envios.filter(e => e.prioridad === "Media").length} fixedPercentage={porcentajes.prioridad["Media"]} color="#ed6c02" icon={<WarningAmberIcon sx={{ color: '#ed6c02', fontSize: 32 }} />} type="Prioridad" value="Media" active={filtroTipo === "Prioridad" && valorFiltro === "Media"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Prioridad Baja" count={envios.filter(e => e.prioridad === "Baja").length} fixedPercentage={porcentajes.prioridad["Baja"]} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 32 }} />} type="Prioridad" value="Baja" active={filtroTipo === "Prioridad" && valorFiltro === "Baja"} />
+                </Grid>
+                
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Creados" count={envios.filter(e => e.estado === "Creado").length} fixedPercentage={porcentajes.estado["Creado"]} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 32 }} />} type="Estado" value="Creado" active={filtroTipo === "Estado" && valorFiltro === "Creado"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} fixedPercentage={porcentajes.estado["En sucursal"]} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 32 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="En Camino" count={envios.filter(e => e.estado === "En tránsito").length} fixedPercentage={porcentajes.estado["En tránsito"]} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 32 }} />} type="Estado" value="En camino" active={filtroTipo === "Estado" && valorFiltro === "En camino"} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} fixedPercentage={porcentajes.estado["Entregado"]} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 32 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"} />
+                </Grid>
             </Grid>
+
             <MaterialReactTable
                 columns={columns}
                 data={enviosFiltrados}
@@ -283,7 +336,7 @@ const MainAlta = () => {
                     pagination: { pageIndex: 0, pageSize: 5 },
                     sorting: [{ id: 'fechaCreacion', desc: true }]
                 }}
-                muiTablePaperProps={{ sx: { borderRadius: '15px', overflow: 'hidden' } }}
+                muiTablePaperProps={{ sx: { borderRadius: '15px', overflow: 'hidden', boxShadow: 3 } }}
             />
         </Box>
     );

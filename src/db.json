@@ -1,113 +1,849 @@
 {
   "envios": [
     {
-      "id": "swc16l9ESVw",
-      "trackingId": "TRK-631258",
-      "remitente": "asd",
-      "destinatario": "asd",
-      "origen": "asd",
-      "destino": "asd",
-      "tipo": "Normal",
+      "id": "TRK-992103",
+      "trackingId": "TRK-992103",
+      "remitente": "Laboratorio Bio",
+      "destinatario": "Clínica Norte",
+      "origen": "CABA",
+      "destino": "San Isidro",
+      "tipo": "Express",
+      "distancia": "30",
+      "volumen": "0.20",
+      "ventanaHoraria": "10:00-12:00",
+      "restricciones": "Frio",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Baja",
       "estado": "En sucursal",
-      "fechaCreacion": "2026-03-27T04:43:56.364Z",
+      "fechaCreacion": "2026-04-06T18:00:00Z",
       "historial": [
         {
           "estado": "Creado",
-          "timestamp": "2026-03-27T04:43:56.365Z",
+          "timestamp": "2026-04-06T18:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T08:00:00Z",
+          "usuario": "Deposito_CABA"
+        }
+      ]
+    },
+    {
+      "id": "TRK-445612",
+      "trackingId": "TRK-445612",
+      "remitente": "Tech Store",
+      "destinatario": "Ana Lynch",
+      "origen": "La Plata",
+      "destino": "CABA",
+      "tipo": "Express",
+      "distancia": "65",
+      "volumen": "0.15",
+      "ventanaHoraria": "08:00-11:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Alta",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-06T09:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-06T09:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-06T14:20:00Z",
+          "usuario": "Chofer_02"
+        }
+      ]
+    },
+    {
+      "id": "TRK-771023",
+      "trackingId": "TRK-771023",
+      "remitente": "Bazar Online",
+      "destinatario": "Marta Diaz",
+      "origen": "CABA",
+      "destino": "Avellaneda",
+      "tipo": "Normal",
+      "distancia": "12",
+      "volumen": "0.60",
+      "ventanaHoraria": "14:00-20:00",
+      "restricciones": "Fragil",
+      "prioridad": "Media",
+      "saturacionSimulada": "Alta",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T07:15:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T07:15:00Z",
           "usuario": "Sistema"
         },
         {
           "estado": "En tránsito",
-          "timestamp": "2026-03-27T04:44:21.565Z",
-          "usuario": "Supervisor_01"
-        },
-        {
-          "estado": "En sucursal",
-          "timestamp": "2026-03-27T18:38:45.595Z",
-          "usuario": "Supervisor_01"
-        },
-        {
-          "estado": "Entregado",
-          "timestamp": "2026-03-27T18:38:48.333Z",
-          "usuario": "Supervisor_01"
-        },
-        {
-          "estado": "En sucursal",
-          "timestamp": "2026-03-29T18:35:49.221Z",
-          "usuario": "Supervisor_01"
+          "timestamp": "2026-04-07T12:00:00Z",
+          "usuario": "Chofer_05"
         }
       ]
     },
     {
-      "id": "TRK-576192",
-      "trackingId": "TRK-576192",
-      "remitente": "Gabriel",
-      "destinatario": "Facundo",
-      "origen": "Matheu 2019",
-      "destino": "Ugarteche 1970",
+      "id": "TRK-552190",
+      "trackingId": "TRK-552190",
+      "remitente": "Distribuidora Sur",
+      "destinatario": "Almacen Mary",
+      "origen": "Berazategui",
+      "destino": "Quilmes",
       "tipo": "Normal",
-      "distancia": "50",
-      "volumen": "0.25",
-      "ventanaHoraria": "08:00-12:00",
-      "restricciones": "Fragil",
-      "estado": "Creado",
-      "fechaCreacion": "2026-03-29T22:47:15.803Z",
+      "distancia": "10",
+      "volumen": "1.20",
+      "ventanaHoraria": "08:00-16:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Media",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-06T15:30:00Z",
       "historial": [
         {
           "estado": "Creado",
-          "timestamp": "2026-03-29T22:47:15.803Z",
+          "timestamp": "2026-04-06T15:30:00Z",
           "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T09:00:00Z",
+          "usuario": "Deposito_Sur"
         }
       ]
     },
     {
-      "id": "TRK-507100",
-      "trackingId": "TRK-507100",
-      "remitente": "Yo",
-      "destinatario": "Vos",
-      "origen": "Mi casa",
-      "destino": "Tu casa",
+      "id": "TRK-661209",
+      "trackingId": "TRK-661209",
+      "remitente": "Repuestos Ya",
+      "destinatario": "Taller Jorge",
+      "origen": "CABA",
+      "destino": "Moreno",
       "tipo": "Normal",
-      "distancia": "100",
-      "volumen": "0.20",
+      "distancia": "40",
+      "volumen": "0.40",
+      "ventanaHoraria": "10:00-18:00",
+      "restricciones": "Fragil",
+      "prioridad": "Media",
+      "saturacionSimulada": "Baja",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-05T14:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-05T14:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-06T10:30:00Z",
+          "usuario": "Chofer_05"
+        }
+      ]
+    },
+    {
+      "id": "TRK-228374",
+      "trackingId": "TRK-228374",
+      "remitente": "Vivero Verde",
+      "destinatario": "Rosa Flores",
+      "origen": "Pilar",
+      "destino": "Escobar",
+      "tipo": "Normal",
+      "distancia": "15",
+      "volumen": "1.50",
+      "ventanaHoraria": "09:00-18:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Media",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T06:45:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T06:45:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-07T11:20:00Z",
+          "usuario": "Chofer_09"
+        }
+      ]
+    },
+    {
+      "id": "TRK-881273",
+      "trackingId": "TRK-881273",
+      "remitente": "Mayorista G",
+      "destinatario": "Kiosco P",
+      "origen": "CABA",
+      "destino": "Merlo",
+      "tipo": "Normal",
+      "distancia": "35",
+      "volumen": "4.20",
+      "ventanaHoraria": "08:00-17:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Baja",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-06T11:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-06T11:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-06T16:30:00Z",
+          "usuario": "Deposito_Oeste"
+        }
+      ]
+    },
+    {
+      "id": "TRK-449182",
+      "trackingId": "TRK-449182",
+      "remitente": "Bazar Sol",
+      "destinatario": "Raul Martinez",
+      "origen": "CABA",
+      "destino": "CABA",
+      "tipo": "Normal",
+      "distancia": "5",
+      "volumen": "0.30",
       "ventanaHoraria": "08:00-21:00",
       "restricciones": "Ninguna",
       "prioridad": "Baja",
       "saturacionSimulada": "Baja",
-      "estado": "Creado",
-      "fechaCreacion": "2026-03-30T06:55:49.135Z",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-05T10:00:00Z",
       "historial": [
         {
           "estado": "Creado",
-          "timestamp": "2026-03-30T06:55:49.135Z",
+          "timestamp": "2026-04-05T10:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-05T18:00:00Z",
+          "usuario": "Chofer_09"
+        }
+      ]
+    },
+    {
+      "id": "TRK-102938",
+      "trackingId": "TRK-102938",
+      "remitente": "Electro Mundo",
+      "destinatario": "Jorge Luis",
+      "origen": "Cordoba",
+      "destino": "Villa Maria",
+      "tipo": "Express",
+      "distancia": "150",
+      "volumen": "0.80",
+      "ventanaHoraria": "09:00-13:00",
+      "restricciones": "Fragil",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Media",
+      "estado": "Creado",
+      "fechaCreacion": "2026-04-07T12:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T12:00:00Z",
           "usuario": "Sistema"
         }
       ]
     },
     {
-      "id": "TRK-277766",
-      "trackingId": "TRK-277766",
-      "remitente": "Test Express",
-      "destinatario": "Si",
-      "origen": "a",
-      "destino": "a",
-      "tipo": "Express",
-      "distancia": "100",
-      "volumen": "0.10",
-      "ventanaHoraria": "08:00-22:00",
+      "id": "TRK-475869",
+      "trackingId": "TRK-475869",
+      "remitente": "Moda Argentina",
+      "destinatario": "Lucia Paz",
+      "origen": "Rosario",
+      "destino": "Santa Fe",
+      "tipo": "Normal",
+      "distancia": "170",
+      "volumen": "0.45",
+      "ventanaHoraria": "08:00-20:00",
       "restricciones": "Ninguna",
-      "prioridad": "Alta",
+      "prioridad": "Media",
       "saturacionSimulada": "Baja",
-      "estado": "Creado",
-      "fechaCreacion": "2026-03-30T07:01:16.123Z",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-06T14:20:00Z",
       "historial": [
         {
           "estado": "Creado",
-          "timestamp": "2026-03-30T07:01:16.123Z",
+          "timestamp": "2026-04-06T14:20:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T09:15:00Z",
+          "usuario": "Deposito_Rosario"
+        }
+      ]
+    },
+    {
+      "id": "TRK-334455",
+      "trackingId": "TRK-334455",
+      "remitente": "Herrajes S.A.",
+      "destinatario": "Ferreteria El Clavo",
+      "origen": "CABA",
+      "destino": "Lanus",
+      "tipo": "Normal",
+      "distancia": "15",
+      "volumen": "5.50",
+      "ventanaHoraria": "07:00-15:00",
+      "restricciones": "Pesado",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Alta",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T08:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T08:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-07T13:45:00Z",
+          "usuario": "Chofer_12"
+        }
+      ]
+    },
+    {
+      "id": "TRK-998877",
+      "trackingId": "TRK-998877",
+      "remitente": "Farmacia Central",
+      "destinatario": "Hospital Posadas",
+      "origen": "Moron",
+      "destino": "Haedo",
+      "tipo": "Express",
+      "distancia": "8",
+      "volumen": "0.10",
+      "ventanaHoraria": "00:00-23:59",
+      "restricciones": "Urgente",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Baja",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-07T01:30:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T01:30:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-07T03:00:00Z",
+          "usuario": "Mensajeria_Express"
+        }
+      ]
+    },
+    {
+      "id": "TRK-112233",
+      "trackingId": "TRK-112233",
+      "remitente": "Insumos PC",
+      "destinatario": "Estudio Juridico",
+      "origen": "CABA",
+      "destino": "CABA",
+      "tipo": "Normal",
+      "distancia": "4",
+      "volumen": "0.30",
+      "ventanaHoraria": "10:00-18:00",
+      "restricciones": "Fragil",
+      "prioridad": "Media",
+      "saturacionSimulada": "Media",
+      "estado": "Creado",
+      "fechaCreacion": "2026-04-07T10:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T10:00:00Z",
           "usuario": "Sistema"
         }
       ]
+    },
+    {
+      "id": "TRK-667788",
+      "trackingId": "TRK-667788",
+      "remitente": "Vinos del Valle",
+      "destinatario": "Restaurante El Faro",
+      "origen": "Mendoza",
+      "destino": "CABA",
+      "tipo": "Normal",
+      "distancia": "1050",
+      "volumen": "2.00",
+      "ventanaHoraria": "09:00-17:00",
+      "restricciones": "Fragil",
+      "prioridad": "Media",
+      "saturacionSimulada": "Baja",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-05T16:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-05T16:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-06T20:00:00Z",
+          "usuario": "Camion_Larga_Distancia"
+        }
+      ]
+    },
+    {
+      "id": "TRK-554433",
+      "trackingId": "TRK-554433",
+      "remitente": "Zapatos Comodos",
+      "destinatario": "Maria Sosa",
+      "origen": "Lomas de Zamora",
+      "destino": "Banfield",
+      "tipo": "Normal",
+      "distancia": "5",
+      "volumen": "0.25",
+      "ventanaHoraria": "14:00-19:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Alta",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-06T12:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-06T12:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-06T18:30:00Z",
+          "usuario": "Chofer_04"
+        }
+      ]
+    },
+    {
+      "id": "TRK-121212",
+      "trackingId": "TRK-121212",
+      "remitente": "Libreria Escolar",
+      "destinatario": "Colegio San Jose",
+      "origen": "Quilmes",
+      "destino": "Bernal",
+      "tipo": "Normal",
+      "distancia": "6",
+      "volumen": "3.00",
+      "ventanaHoraria": "08:00-12:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Media",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T07:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T07:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T11:00:00Z",
+          "usuario": "Deposito_Bernal"
+        }
+      ]
+    },
+    {
+      "id": "TRK-343434",
+      "trackingId": "TRK-343434",
+      "remitente": "Pet Shop",
+      "destinatario": "Daniel Gerez",
+      "origen": "CABA",
+      "destino": "Tigre",
+      "tipo": "Normal",
+      "distancia": "32",
+      "volumen": "1.20",
+      "ventanaHoraria": "10:00-20:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Baja",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T09:30:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T09:30:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-07T14:00:00Z",
+          "usuario": "Chofer_22"
+        }
+      ]
+    },
+    {
+      "id": "TRK-565656",
+      "trackingId": "TRK-565656",
+      "remitente": "Muebles Hoy",
+      "destinatario": "Ines Rivera",
+      "origen": "San Fernando",
+      "destino": "Pilar",
+      "tipo": "Normal",
+      "distancia": "25",
+      "volumen": "12.00",
+      "ventanaHoraria": "09:00-15:00",
+      "restricciones": "Pesado",
+      "prioridad": "Media",
+      "saturacionSimulada": "Alta",
+      "estado": "Creado",
+      "fechaCreacion": "2026-04-07T13:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T13:00:00Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-787878",
+      "trackingId": "TRK-787878",
+      "remitente": "Auto Partes",
+      "destinatario": "Lubricentro Pepe",
+      "origen": "CABA",
+      "destino": "Hurlingham",
+      "tipo": "Express",
+      "distancia": "28",
+      "volumen": "0.60",
+      "ventanaHoraria": "08:00-12:00",
+      "restricciones": "Fragil",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T07:45:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T07:45:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T10:30:00Z",
+          "usuario": "Deposito_Oeste"
+        }
+      ]
+    },
+    {
+      "id": "TRK-909090",
+      "trackingId": "TRK-909090",
+      "remitente": "Articulos de Limpieza",
+      "destinatario": "Consorcio Av. Mayo",
+      "origen": "CABA",
+      "destino": "CABA",
+      "tipo": "Normal",
+      "distancia": "2",
+      "volumen": "4.00",
+      "ventanaHoraria": "08:00-18:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Baja",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-06T09:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-06T09:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-06T15:00:00Z",
+          "usuario": "Chofer_01"
+        }
+      ]
+    },
+    {
+      "id": "TRK-212121",
+      "trackingId": "TRK-212121",
+      "remitente": "Regalos Flor",
+      "destinatario": "Sonia Gil",
+      "origen": "CABA",
+      "destino": "Olivos",
+      "tipo": "Normal",
+      "distancia": "18",
+      "volumen": "0.30",
+      "ventanaHoraria": "10:00-21:00",
+      "restricciones": "Fragil",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Alta",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T11:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T11:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-07T14:15:00Z",
+          "usuario": "Chofer_08"
+        }
+      ]
+    },
+    {
+      "id": "TRK-434343",
+      "trackingId": "TRK-434343",
+      "remitente": "Perfumeria VIP",
+      "destinatario": "Mabel Torres",
+      "origen": "CABA",
+      "destino": "Belgrano",
+      "tipo": "Express",
+      "distancia": "5",
+      "volumen": "0.10",
+      "ventanaHoraria": "09:00-12:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T08:30:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T08:30:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T12:00:00Z",
+          "usuario": "Deposito_Norte"
+        }
+      ]
+    },
+    {
+      "id": "TRK-656565",
+      "trackingId": "TRK-656565",
+      "remitente": "Distribuidora Bebidas",
+      "destinatario": "Bar de Moe",
+      "origen": "Quilmes",
+      "destino": "Ezpeleta",
+      "tipo": "Normal",
+      "distancia": "12",
+      "volumen": "8.50",
+      "ventanaHoraria": "07:00-14:00",
+      "restricciones": "Pesado",
+      "prioridad": "Media",
+      "saturacionSimulada": "Baja",
+      "estado": "Creado",
+      "fechaCreacion": "2026-04-07T13:45:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T13:45:00Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-878787",
+      "trackingId": "TRK-878787",
+      "remitente": "Pintureria Color",
+      "destinatario": "Obra San Luis",
+      "origen": "Moreno",
+      "destino": "Gral Rodriguez",
+      "tipo": "Normal",
+      "distancia": "15",
+      "volumen": "6.00",
+      "ventanaHoraria": "08:00-16:00",
+      "restricciones": "Liquido Inflamable",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T06:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T06:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T10:00:00Z",
+          "usuario": "Deposito_Oeste"
+        }
+      ]
+    },
+    {
+      "id": "TRK-131313",
+      "trackingId": "TRK-131313",
+      "remitente": "Instrumentos Musicales",
+      "destinatario": "Pablo Rock",
+      "origen": "CABA",
+      "destino": "Palermo",
+      "tipo": "Normal",
+      "distancia": "3",
+      "volumen": "1.80",
+      "ventanaHoraria": "14:00-22:00",
+      "restricciones": "Fragil",
+      "prioridad": "Media",
+      "saturacionSimulada": "Alta",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-07T11:30:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T11:30:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-07T14:00:00Z",
+          "usuario": "Chofer_02"
+        }
+      ]
+    },
+    {
+      "id": "TRK-242424",
+      "trackingId": "TRK-242424",
+      "remitente": "Importadora Asia",
+      "destinatario": "Celulares Ya",
+      "origen": "CABA",
+      "destino": "CABA",
+      "tipo": "Express",
+      "distancia": "7",
+      "volumen": "0.50",
+      "ventanaHoraria": "10:00-14:00",
+      "restricciones": "Alto Valor",
+      "prioridad": "Alta",
+      "saturacionSimulada": "Baja",
+      "estado": "Entregado",
+      "fechaCreacion": "2026-04-07T08:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T08:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "Entregado",
+          "timestamp": "2026-04-07T13:00:00Z",
+          "usuario": "Chofer_Seguridad"
+        }
+      ]
+    },
+    {
+      "id": "TRK-353535",
+      "trackingId": "TRK-353535",
+      "remitente": "Cafe Gourmet",
+      "destinatario": "Oficinas Puerto Madero",
+      "origen": "CABA",
+      "destino": "CABA",
+      "tipo": "Normal",
+      "distancia": "5",
+      "volumen": "1.00",
+      "ventanaHoraria": "08:00-12:00",
+      "restricciones": "Fragil",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Media",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T09:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T09:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T12:30:00Z",
+          "usuario": "Deposito_CABA"
+        }
+      ]
+    },
+    {
+      "id": "TRK-464646",
+      "trackingId": "TRK-464646",
+      "remitente": "Deportes 10",
+      "destinatario": "Gimnasio Fit",
+      "origen": "Vicente Lopez",
+      "destino": "San Isidro",
+      "tipo": "Normal",
+      "distancia": "12",
+      "volumen": "5.00",
+      "ventanaHoraria": "14:00-18:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Media",
+      "saturacionSimulada": "Baja",
+      "estado": "Creado",
+      "fechaCreacion": "2026-04-07T14:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T14:00:00Z",
+          "usuario": "Sistema"
+        }
+      ]
+    },
+    {
+      "id": "TRK-575757",
+      "trackingId": "TRK-575757",
+      "remitente": "Editora Nacional",
+      "destinatario": "Libreria El Atento",
+      "origen": "CABA",
+      "destino": "Resistencia",
+      "tipo": "Normal",
+      "distancia": "1000",
+      "volumen": "15.00",
+      "ventanaHoraria": "09:00-18:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Baja",
+      "saturacionSimulada": "Media",
+      "estado": "En tránsito",
+      "fechaCreacion": "2026-04-05T08:00:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-05T08:00:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En tránsito",
+          "timestamp": "2026-04-06T15:00:00Z",
+          "usuario": "Camion_Troncal"
+        }
+      ]
+    },
+    {
+      "id": "TRK-686868",
+      "trackingId": "TRK-686868",
+      "remitente": "Papelera Sur",
+      "destinatario": "Impresiones Ya",
+      "origen": "Quilmes",
+      "destino": "Lomas",
+      "tipo": "Normal",
+      "distancia": "20",
+      "volumen": "4.50",
+      "ventanaHoraria": "08:00-17:00",
+      "restricciones": "Ninguna",
+      "prioridad": "Media",
+      "saturacionSimulada": "Alta",
+      "estado": "En sucursal",
+      "fechaCreacion": "2026-04-07T08:15:00Z",
+      "historial": [
+        {
+          "estado": "Creado",
+          "timestamp": "2026-04-07T08:15:00Z",
+          "usuario": "Sistema"
+        },
+        {
+          "estado": "En sucursal",
+          "timestamp": "2026-04-07T12:00:00Z",
+          "usuario": "Deposito_Lomas"
+        }
+      ]
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
