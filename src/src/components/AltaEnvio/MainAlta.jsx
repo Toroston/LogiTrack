@@ -313,7 +313,7 @@ const MainAlta = () => {
                     <StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} fixedPercentage={porcentajes.estado["En sucursal"]} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 32 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="En Camino" count={envios.filter(e => e.estado === "En tránsito").length} fixedPercentage={porcentajes.estado["En tránsito"]} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 32 }} />} type="Estado" value="En camino" active={filtroTipo === "Estado" && valorFiltro === "En camino"} />
+                    <StatCard label="En tránsito" count={envios.filter(e => e.estado === "En tránsito").length} fixedPercentage={porcentajes.estado["En tránsito"]} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 32 }} />} type="Estado" value="En tránsito" active={filtroTipo === "Estado" && valorFiltro === "En tránsito"} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} fixedPercentage={porcentajes.estado["Entregado"]} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 32 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"} />
