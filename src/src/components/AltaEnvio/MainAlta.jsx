@@ -35,15 +35,9 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import RouteIcon from '@mui/icons-material/Route';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-<<<<<<< Updated upstream
-import PropTypes from "prop-types";
-=======
-<<<<<<< Updated upstream
-=======
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PropTypes from "prop-types";
->>>>>>> Stashed changes
 
 const logitrackTheme = createTheme({
     palette: {
@@ -53,7 +47,6 @@ const logitrackTheme = createTheme({
         MuiPaper: { styleOverrides: { root: { borderRadius: '16px' } } },
     },
 });
->>>>>>> Stashed changes
 
 const obtenerSaturacionPonderada = () => {
     const probabilidad = Math.random();
@@ -76,6 +69,8 @@ const calcularHorasVentana = (ventanaString) => {
 
 const MainAlta = () => {
     const [envios, setEnvios] = useState([]);
+    
+    // --- NUEVA LÓGICA DE FILTROS SEPARADOS ---
     const [filtroPrioridad, setFiltroPrioridad] = useState("Todos");
     const [filtroEstado, setFiltroEstado] = useState("Todos");
     
@@ -92,33 +87,7 @@ const MainAlta = () => {
 
     useEffect(() => { cargarEnvios(); }, []);
 
-<<<<<<< Updated upstream
-    const porcentajes = useMemo(() => {
-        const total = envios.length;
-        if (total === 0) return { prioridad: {}, estado: {} };
-
-        const calcularGrupo = (claves, propiedad) => {
-            let conteos = claves.map(clave => envios.filter(e => e[propiedad] === clave).length);
-            let redondeados = conteos.map(c => Math.round((c / total) * 100));
-
-            let sumaRedondeada = redondeados.reduce((a, b) => a + b, 0);
-            let diferencia = 100 - sumaRedondeada;
-
-            if (diferencia !== 0) {
-                const indiceMayor = conteos.indexOf(Math.max(...conteos));
-                redondeados[indiceMayor] += diferencia;
-            }
-
-            return claves.reduce((obj, clave, i) => ({ ...obj, [clave]: redondeados[i] }), {});
-        };
-
-        return {
-            prioridad: calcularGrupo(["Alta", "Media", "Baja"], "prioridad"),
-            estado: calcularGrupo(["Creado", "En sucursal", "En tránsito", "Entregado"], "estado")
-        };
-    }, [envios]);
-
-=======
+    // 1. Primero filtramos por fechas para tener una base de datos temporal
     const enviosPorFecha = useMemo(() => {
         return envios.filter(envio => {
             const fechaEnvio = dayjs(envio.fechaCreacion);
@@ -126,6 +95,8 @@ const MainAlta = () => {
                    (!fechaFin || fechaEnvio.isBefore(fechaFin.endOf('day').add(1, 'millisecond')));
         });
     }, [envios, fechaInicio, fechaFin]);
+
+    // 2. Luego aplicamos los filtros cruzados de Prioridad y Estado para la TABLA
     const enviosFiltrados = useMemo(() => {
         return enviosPorFecha.filter(envio => {
             const cumplePrioridad = filtroPrioridad === "Todos" || envio.prioridad === filtroPrioridad;
@@ -134,15 +105,7 @@ const MainAlta = () => {
         });
     }, [enviosPorFecha, filtroPrioridad, filtroEstado]);
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-    const enviosFiltrados = envios.filter(envio => {
-        if (valorFiltro === "Todos") return true;
-        if (filtroTipo === "Prioridad") return envio.prioridad === valorFiltro;
-        if (filtroTipo === "Estado") return envio.estado === valorFiltro;
-        return true;
-    });
-=======
+    // 3. Calculamos los porcentajes basados en el universo actual (enviosPorFecha)
     const porcentajes = useMemo(() => {
         const total = enviosPorFecha.length;
         if (total === 0) return { prioridad: {}, estado: {} };
@@ -162,13 +125,14 @@ const MainAlta = () => {
             estado: calcularGrupo(["Creado", "En sucursal", "En tránsito", "Entregado"], "estado")
         };
     }, [enviosPorFecha]);
->>>>>>> Stashed changes
 
     const manejarFiltro = (tipo, valor) => {
         if (tipo === "Todos") {
             setFiltroPrioridad("Todos");
             setFiltroEstado("Todos");
         } else if (tipo === "Prioridad") {
+            // Si tocamos la que ya está activa, la desactivamos (opcional), 
+            // pero según tu pedido, simplemente se setea.
             setFiltroPrioridad(valor);
         } else if (tipo === "Estado") {
             setFiltroEstado(valor);
@@ -256,20 +220,7 @@ const MainAlta = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, '&:hover .copy-button': { opacity: 1 } }}>
                         <Typography variant="body2" sx={{ fontWeight: '500' }}>{id}</Typography>
                         <Tooltip title={copySuccess === id ? "¡Copiado!" : "Copiar ID"} arrow>
-<<<<<<< Updated upstream
-                            <IconButton
-=======
-<<<<<<< Updated upstream
-                            <IconButton 
->>>>>>> Stashed changes
-                                className="copy-button"
-                                size="small"
-                                onClick={() => handleCopy(id)}
-                                sx={{ opacity: 0, transition: 'opacity 0.2s', padding: '2px' }}
-                            >
-=======
                             <IconButton className="copy-button" size="small" onClick={() => handleCopy(id)} sx={{ opacity: 0, transition: 'opacity 0.2s', padding: '2px' }}>
->>>>>>> Stashed changes
                                 <ContentCopyIcon sx={{ fontSize: '1rem', color: 'rgb(4, 170, 109)' }} />
                             </IconButton>
                         </Tooltip>
@@ -281,37 +232,11 @@ const MainAlta = () => {
         { accessorKey: "origen", header: "Origen", ...columnStyle, ...headerStyle },
         {
             accessorKey: "prioridad", header: "Prioridad", ...columnStyle, ...headerStyle,
-<<<<<<< Updated upstream
-            Cell: (props) => {
-                const { cell } = props;
-                const value = cell.getValue();
-                return (
-                    <Chip
-                        label={value}
-                        color={value === 'Alta' ? 'error' : value === 'Media' ? 'warning' : 'success'}
-                        size="small"
-                        variant="outlined"
-                        sx={{ fontWeight: 'bold', minWidth: '70px' }}
-                    />
-                );
-            }
-=======
-<<<<<<< Updated upstream
-            Cell: ({ cell }) => (
-                <Chip
-                    label={cell.getValue()}
-                    color={cell.getValue() === 'Alta' ? 'error' : cell.getValue() === 'Media' ? 'warning' : 'success'}
-                    size="small" variant="outlined" sx={{ fontWeight: 'bold', minWidth: '70px' }}
-                />
-            )
-=======
             Cell: (props) => {
                 const { cell } = props;
                 const value = cell.getValue();
                 return <Chip label={value} color={value === 'Alta' ? 'error' : value === 'Media' ? 'warning' : 'success'} size="small" variant="outlined" sx={{ fontWeight: 'bold', minWidth: '70px' }} />;
             }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
         },
         { accessorKey: "estado", header: "Estado", ...columnStyle, ...headerStyle },
         {
@@ -321,101 +246,11 @@ const MainAlta = () => {
         {
             id: 'acciones', header: "Acciones", ...columnStyle, ...headerStyle,
             Cell: ({ row }) => (
-<<<<<<< Updated upstream
-                <Button
-                    variant="contained" size="small" sx={{ backgroundColor: "#1976d2" }}
-                    onClick={() => navigate(`/detalle/${row.original.trackingId}`, { 
-                        state: { envio: row.original, from: 'envios' } 
-                    })}
-                > Ver Detalle </Button>
-=======
                 <Button variant="contained" size="small" sx={{ backgroundColor: "#1976d2" }} onClick={() => navigate(`/detalle/${row.original.trackingId}`, { state: { envio: row.original, from: 'envios' } })}> Ver Detalle </Button>
->>>>>>> Stashed changes
             )
         }
     ];
 
-<<<<<<< Updated upstream
-    const StatCard = ({ label, count, fixedPercentage, color, icon, type, value, active }) => {
-        return (
-            <Paper
-                elevation={active ? 4 : 1}
-                onClick={() => manejarFiltro(type, value)}
-                sx={{
-                    p: '20px 16px',
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 2, 
-                    borderRadius: '16px',
-                    borderLeft: `6px solid ${color}`, 
-                    bgcolor: active ? '#f8f9fa' : '#fff', 
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease-in-out', 
-                    width: '100%', 
-                    boxSizing: 'border-box',
-                    minHeight: '110px',
-                    border: active ? `1.5px solid ${color}` : '1px solid #eee',
-                    '&:hover': { boxShadow: 4, transform: 'translateY(-3px)' }
-                }}
-            >
-                <Box sx={{ 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: `${color}15`, borderRadius: '12px', p: 1.5
-                }}>
-                    {icon}
-                </Box>
-                <Box sx={{ overflow: 'hidden', flexGrow: 1 }}>
-                    <Typography variant="caption" sx={{ color: '#666', fontWeight: 'bold', fontSize: '0.75rem', textTransform: 'uppercase', display: 'block', mb: 0.5 }}>
-                        {label}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography variant="h4" sx={{ fontWeight: '800', color: '#333', lineHeight: 1 }}>
-                            {count}
-                        </Typography>
-                        {type !== "Todos" && (
-                            <Typography variant="h5" sx={{ color: color, fontWeight: '700', opacity: 0.9, lineHeight: 1 }}>
-                                {fixedPercentage}%
-                            </Typography>
-                        )}
-                    </Box>
-                </Box>
-            </Paper>
-        );
-    };
-
-    StatCard.propTypes = {
-        label: PropTypes.string,
-        count: PropTypes.number,
-        fixedPercentage: PropTypes.number,
-        color: PropTypes.string,
-        icon: PropTypes.node,
-        type: PropTypes.string,
-        value: PropTypes.string,
-        active: PropTypes.bool
-    };
-
-    const totalEnvios = envios.length;
-=======
-<<<<<<< Updated upstream
-    const StatCard = ({ label, count, color, icon, type, value, active }) => (
-        <Paper
-            elevation={active ? 4 : 1}
-            onClick={() => manejarFiltro(type, value)}
-            sx={{
-                p: '10px 12px', display: 'flex', alignItems: 'center', gap: 1.5, borderRadius: '12px',
-                borderLeft: `5px solid ${color}`, bgcolor: active ? '#f0f0f0' : '#fff', cursor: 'pointer',
-                transition: 'all 0.2s ease', width: '100%', boxSizing: 'border-box',
-                border: active ? `1.5px solid ${color}` : '1px solid #eee',
-                '&:hover': { boxShadow: 3, transform: 'translateY(-2px)' }
-            }}
-        >
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</Box>
-            <Box sx={{ overflow: 'hidden' }}>
-                <Typography variant="caption" sx={{ color: '#666', fontWeight: 'bold', fontSize: '0.65rem', textTransform: 'uppercase', display: 'block', whiteSpace: 'nowrap' }}>
-                    {label}
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', lineHeight: 1.2 }}>{count}</Typography>
-=======
     const StatCard = ({ label, count, fixedPercentage, color, icon, type, value, active }) => (
         <Paper elevation={active ? 4 : 1} onClick={() => manejarFiltro(type, value)} sx={{ p: '20px 16px', display: 'flex', alignItems: 'center', gap: 2, borderRadius: '16px', borderLeft: `6px solid ${color}`, bgcolor: active ? '#f8f9fa' : '#fff', cursor: 'pointer', transition: 'all 0.2s ease-in-out', width: '100%', boxSizing: 'border-box', minHeight: '110px', border: active ? `1.5px solid ${color}` : '1px solid #eee', '&:hover': { boxShadow: 4, transform: 'translateY(-3px)' } }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: `${color}15`, borderRadius: '12px', p: 1.5 }}>{icon}</Box>
@@ -425,66 +260,10 @@ const MainAlta = () => {
                     <Typography variant="h4" sx={{ fontWeight: '800', color: '#333', lineHeight: 1 }}>{count}</Typography>
                     {type !== "Todos" && <Typography variant="h5" sx={{ color: color, fontWeight: '700', opacity: 0.9, lineHeight: 1 }}>{fixedPercentage || 0}%</Typography>}
                 </Box>
->>>>>>> Stashed changes
             </Box>
         </Paper>
     );
->>>>>>> Stashed changes
 
-<<<<<<< Updated upstream
-    return (
-        <Box sx={{ p: 3, bgcolor: '#f4f6f8', minHeight: '100vh' }}>
-            <Box sx={{ mb: 3 }}>
-                <BackButton />
-            </Box>
-
-            <AltaEnvio onCrear={crearEnvio} />
-            
-            <Grid container spacing={3} sx={{ mb: 4, width: '100%', ml: 0 }}>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Total Envíos" count={totalEnvios} color="rgb(4, 170, 109)" icon={<LocalShippingIcon sx={{ color: 'rgb(4, 170, 109)', fontSize: 32 }} />} type="Todos" value="Todos" active={valorFiltro === "Todos"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Prioridad Alta" count={envios.filter(e => e.prioridad === "Alta").length} fixedPercentage={porcentajes.prioridad["Alta"]} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 32 }} />} type="Prioridad" value="Alta" active={filtroTipo === "Prioridad" && valorFiltro === "Alta"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Prioridad Media" count={envios.filter(e => e.prioridad === "Media").length} fixedPercentage={porcentajes.prioridad["Media"]} color="#ed6c02" icon={<WarningAmberIcon sx={{ color: '#ed6c02', fontSize: 32 }} />} type="Prioridad" value="Media" active={filtroTipo === "Prioridad" && valorFiltro === "Media"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Prioridad Baja" count={envios.filter(e => e.prioridad === "Baja").length} fixedPercentage={porcentajes.prioridad["Baja"]} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 32 }} />} type="Prioridad" value="Baja" active={filtroTipo === "Prioridad" && valorFiltro === "Baja"} />
-                </Grid>
-                
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Creados" count={envios.filter(e => e.estado === "Creado").length} fixedPercentage={porcentajes.estado["Creado"]} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 32 }} />} type="Estado" value="Creado" active={filtroTipo === "Estado" && valorFiltro === "Creado"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="En Sucursal" count={envios.filter(e => e.estado === "En sucursal").length} fixedPercentage={porcentajes.estado["En sucursal"]} color="#0288d1" icon={<StorefrontIcon sx={{ color: '#0288d1', fontSize: 32 }} />} type="Estado" value="En sucursal" active={filtroTipo === "Estado" && valorFiltro === "En sucursal"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="En tránsito" count={envios.filter(e => e.estado === "En tránsito").length} fixedPercentage={porcentajes.estado["En tránsito"]} color="#fbc02d" icon={<RouteIcon sx={{ color: '#fbc02d', fontSize: 32 }} />} type="Estado" value="En tránsito" active={filtroTipo === "Estado" && valorFiltro === "En tránsito"} />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <StatCard label="Entregados" count={envios.filter(e => e.estado === "Entregado").length} fixedPercentage={porcentajes.estado["Entregado"]} color="#4caf50" icon={<DoneAllIcon sx={{ color: '#4caf50', fontSize: 32 }} />} type="Estado" value="Entregado" active={filtroTipo === "Estado" && valorFiltro === "Entregado"} />
-                </Grid>
-            </Grid>
-
-            <MaterialReactTable
-                columns={columns}
-                data={enviosFiltrados}
-                enableDensityToggle={false}
-                enableFullScreenToggle={false}
-                enableColumnActions={false}
-                enableColumnFilters={false}
-                localization={MRT_Localization_ES}
-                initialState={{
-                    density: 'compact',
-                    pagination: { pageIndex: 0, pageSize: 5 },
-                    sorting: [{ id: 'fechaCreacion', desc: true }]
-                }}
-                muiTablePaperProps={{ sx: { borderRadius: '15px', overflow: 'hidden', boxShadow: 3 } }}
-            />
-        </Box>
-=======
     StatCard.propTypes = { label: PropTypes.string, count: PropTypes.number, fixedPercentage: PropTypes.number, color: PropTypes.string, icon: PropTypes.node, type: PropTypes.string, value: PropTypes.string, active: PropTypes.bool };
 
     const DatePickerButton = ({ label, value, onChange }) => {
@@ -513,6 +292,7 @@ const MainAlta = () => {
                     <AltaEnvio onCrear={crearEnvio} />
                     
                     <Grid container spacing={3} sx={{ mb: 4, width: '100%', ml: 0 }}>
+                        {/* CARD TOTAL: Limpia todos los filtros al hacer clic */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard 
                                 label="Total Envíos" 
@@ -524,6 +304,8 @@ const MainAlta = () => {
                                 active={filtroPrioridad === "Todos" && filtroEstado === "Todos"} 
                             />
                         </Grid>
+
+                        {/* CARDS DE PRIORIDAD: Solo afectan filtroPrioridad */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Prioridad Alta" count={enviosPorFecha.filter(e => e.prioridad === "Alta").length} fixedPercentage={porcentajes.prioridad["Alta"]} color="#d32f2f" icon={<ErrorOutlineIcon sx={{ color: '#d32f2f', fontSize: 32 }} />} type="Prioridad" value="Alta" active={filtroPrioridad === "Alta"} />
                         </Grid>
@@ -533,6 +315,8 @@ const MainAlta = () => {
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Prioridad Baja" count={enviosPorFecha.filter(e => e.prioridad === "Baja").length} fixedPercentage={porcentajes.prioridad["Baja"]} color="#2e7d32" icon={<CheckCircleOutlineIcon sx={{ color: '#2e7d32', fontSize: 32 }} />} type="Prioridad" value="Baja" active={filtroPrioridad === "Baja"} />
                         </Grid>
+                        
+                        {/* CARDS DE ESTADO: Solo afectan filtroEstado */}
                         <Grid item xs={12} sm={6} md={3}>
                             <StatCard label="Creados" count={enviosPorFecha.filter(e => e.estado === "Creado").length} fixedPercentage={porcentajes.estado["Creado"]} color="#9c27b0" icon={<InventoryIcon sx={{ color: '#9c27b0', fontSize: 32 }} />} type="Estado" value="Creado" active={filtroEstado === "Creado"} />
                         </Grid>
@@ -569,6 +353,7 @@ const MainAlta = () => {
                                         </IconButton>
                                     </Tooltip>
                                 )}
+                                {/* Indicador de filtros activos en la tabla */}
                                 {(filtroPrioridad !== "Todos" || filtroEstado !== "Todos") && (
                                     <Chip 
                                         label={`Filtros: ${filtroPrioridad} + ${filtroEstado}`} 
@@ -587,7 +372,6 @@ const MainAlta = () => {
                 </Box>
             </ThemeProvider>
         </LocalizationProvider>
->>>>>>> Stashed changes
     );
 };
 
