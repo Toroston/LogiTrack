@@ -27,7 +27,6 @@ const AltaEnvio = ({ onCrear }) => {
     const [openSnack, setOpenSnack] = useState(false);
     const [error, setError] = useState(false);
 
-    // Color verde principal para reutilizar
     const verdeLogitrack = "rgb(4, 170, 109)";
     const verdeHover = "rgb(3, 140, 90)";
 
@@ -84,21 +83,20 @@ const AltaEnvio = ({ onCrear }) => {
 
     return (
         <Box sx={{ mb: 4 }}>
-            {/* Cabecera con el botón de Toggle actualizado */}
             <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
                 <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333' }}>
                     Gestión de Envíos
                 </Typography>
                 <Button 
-                    variant="contained" // Cambiado de 'outlined' a 'contained' para tener fondo sólido
+                    variant="contained"
                     startIcon={expandido ? <KeyboardArrowUpIcon /> : <AddIcon />}
                     onClick={() => setExpandido(!expandido)}
                     sx={{ 
                         borderRadius: 2, 
                         textTransform: 'none',
                         fontWeight: 'bold',
-                        backgroundColor: expandido ? "#757575" : verdeLogitrack, // Gris si está expandido, verde si no
-                        color: "#fff", // Letras blancas siempre
+                        backgroundColor: expandido ? "#757575" : verdeLogitrack,
+                        color: "#fff",
                         '&:hover': { 
                             backgroundColor: expandido ? "#616161" : verdeHover 
                         }

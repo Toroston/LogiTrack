@@ -62,7 +62,6 @@ const MainAlta = () => {
         cargarEnvios();
     }, []);
 
-    // --- LÓGICA DE CÁLCULO DE PORCENTAJES SIN ERROR DE SUMA ---
     const porcentajes = useMemo(() => {
         const total = envios.length;
         if (total === 0) return { prioridad: {}, estado: {} };
@@ -70,13 +69,11 @@ const MainAlta = () => {
         const calcularGrupo = (claves, propiedad) => {
             let conteos = claves.map(clave => envios.filter(e => e[propiedad] === clave).length);
             let redondeados = conteos.map(c => Math.round((c / total) * 100));
-            
-            // Ajuste de error acumulado (para que sume exactamente 100)
+
             let sumaRedondeada = redondeados.reduce((a, b) => a + b, 0);
             let diferencia = 100 - sumaRedondeada;
 
             if (diferencia !== 0) {
-                // Buscamos el índice del que tiene más elementos para absorber la diferencia
                 const indiceMayor = conteos.indexOf(Math.max(...conteos));
                 redondeados[indiceMayor] += diferencia;
             }

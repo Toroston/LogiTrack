@@ -14,13 +14,11 @@ const BusquedaEnvio = ({ user }) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Función para buscar en la API
     const ejecutarBusqueda = async (idParaBuscar) => {
         if (!idParaBuscar) return;
         setLoading(true);
         setError('');
         try {
-            // Buscamos por trackingId exacto
             const url = `http://localhost:3001/envios?trackingId=${idParaBuscar.trim()}`;
             const response = await fetch(url);
             const resultados = await response.json();
@@ -39,7 +37,6 @@ const BusquedaEnvio = ({ user }) => {
         }
     };
 
-    // Efecto para reaccionar a cambios en la URL (parámetro ?id=...)
     useEffect(() => {
         if (trackingIdParam) {
             ejecutarBusqueda(trackingIdParam);
@@ -54,7 +51,6 @@ const BusquedaEnvio = ({ user }) => {
             setError('Por favor, ingresá un Tracking ID.');
             return;
         }
-        // Actualizamos la URL, lo que dispara el useEffect
         setSearchParams({ id: idLimpio }, { replace: true });
     };
 
@@ -67,7 +63,6 @@ const BusquedaEnvio = ({ user }) => {
 
     return (
         <Box sx={{ maxWidth: 700, mx: 'auto', mt: 4, px: 2, pb: 5 }}>
-            {/* Solo mostramos el BackButton general si NO hay un envío desplegado */}
             {!envioEncontrado && (
                 <Box sx={{ mb: 2 }}>
                     <BackButton />
@@ -80,7 +75,7 @@ const BusquedaEnvio = ({ user }) => {
                     p: 3, 
                     mb: 4, 
                     borderRadius: '16px',
-                    display: envioEncontrado ? 'none' : 'block' // Ocultamos el buscador si ya hay resultado
+                    display: envioEncontrado ? 'none' : 'block'
                 }}
             >
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -124,12 +119,11 @@ const BusquedaEnvio = ({ user }) => {
                 )}
             </Paper>
 
-            {/* Resultado de la búsqueda */}
             {envioEncontrado && (
                 <Box sx={{ mt: -2 }}>
                     <DetalleEnvio
                         envio={envioEncontrado}
-                        onClose={limpiarBusqueda} // Esto habilita la "X" para volver a buscar
+                        onClose={limpiarBusqueda}
                         user={user}
                     />
                 </Box>

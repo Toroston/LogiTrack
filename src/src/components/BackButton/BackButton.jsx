@@ -10,15 +10,14 @@ const BackButton = () => {
         const path = location.pathname;
         const from = location.state?.from;
 
-        // Si estamos en el detalle, volvemos a donde nos diga el state
         if (path.startsWith('/detalle')) {
             if (from === 'busqueda') {
                 navigate('/busqueda');
             } else {
-                navigate('/envios'); // Fallback por defecto a MainAlta
+                navigate('/envios');
             }
         } 
-        // Si estamos en las pantallas principales, volvemos al menú
+
         else if (path === '/envios' || path === '/busqueda' || path === '/historial') {
             navigate('/');
         } 

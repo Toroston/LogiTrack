@@ -75,7 +75,6 @@ const DetalleEnvio = ({ envio, onClose, user }) => {
             if (onClose) {
                 onClose();
             } else {
-                // CORREGIDO: Redirección inteligente al borrar
                 const fallback = location.state?.from === 'busqueda' ? '/busqueda' : '/envios';
                 navigate(fallback, { replace: true });
             }
