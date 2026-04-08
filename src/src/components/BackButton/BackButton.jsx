@@ -16,11 +16,13 @@ const BackButton = () => {
             } else {
                 navigate('/envios');
             }
-        } 
-
-        else if (path === '/envios' || path === '/busqueda' || path === '/historial') {
+        }
+        else if(path === '/historial'){
+            navigate(-1)
+        }
+        else if (path === '/envios' || path === '/busqueda') {
             navigate('/');
-        } 
+        }
         else {
             navigate(-1);
         }
