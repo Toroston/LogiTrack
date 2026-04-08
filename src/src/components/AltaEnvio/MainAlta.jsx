@@ -1,3 +1,4 @@
+/* eslint react/prop-types: off */
 import { useState, useEffect, useMemo } from "react";
 import { tableStyleColumn, tableStyleHeader } from "../../Helpers/formatHelpers";
 import { MaterialReactTable } from "material-react-table";
@@ -273,6 +274,11 @@ const MainAlta = () => {
                 <DatePicker open={open} onClose={() => setOpen(false)} value={value} onChange={(val) => { onChange(val); setOpen(false); }} slotProps={{ textField: { sx: { display: 'none' } }, popper: { anchorEl: anchorEl, placement: 'bottom-start', sx: { '& .MuiPaper-root': { marginTop: '8px', boxShadow: '0px 10px 30px rgba(0,0,0,0.1)' } } } }} />
             </Box>
         );
+    };
+    DatePickerButton.propTypes = {
+        label: PropTypes.string.isRequired,
+        value: PropTypes.any,
+        onChange: PropTypes.func.isRequired
     };
 
     return (
